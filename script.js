@@ -212,6 +212,9 @@ function navigateTo(moduleId) {
         if (moduleId === 'quiz') {
             initQuiz();
         }
+
+        // Init audio players in this module
+        setTimeout(initAudioPlayers, 100);
     }
 }
 
@@ -586,4 +589,138 @@ async function submitQuiz() {
 function restartQuiz() {
     initQuiz();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== AUDIO PLAYER =====
+var audioPlayers = {};
+
+function initAudioPlayers() {
+    document.querySelectorAll('.audio-player-container').forEach(function(container) {
+        var audioId = container.dataset.audioId;
+        var audioSrc = container.dataset.audioSrc;
+
+        if (audioPlayers[audioId]) return; // already initialized
+
+        var audio = new Audio();
+        audio.preload = 'metadata';
+        audio.src = audioSrc;
+
+        var playBtn = container.querySelector('.audio-play-btn');
+        var progressBar = container.querySelector('.audio-progress-bar');
+        var progressFill = container.querySelector('.audio-progress-fill');
+        var timeDisplay = container.querySelector('.audio-time');
+        var speedBtns = container.querySelectorAll('.speed-btn');
+
+        audioPlayers[audioId] = { audio: audio, container: container };
+
+        function formatTime(s) {
+            if (!s || isNaN(s)) return '0:00';
+            var m = Math.floor(s / 60);
+            var sec = Math.floor(s % 60);
+            return m + ':' + (sec < 10 ? '0' : '') + sec;
+        }
+
+        // Play/Pause
+        playBtn.addEventListener('click', function() {
+            // Pause other players
+            Object.keys(audioPlayers).forEach(function(id) {
+                if (id !== audioId && !audioPlayers[id].audio.paused) {
+                    audioPlayers[id].audio.pause();
+                    audioPlayers[id].container.querySelector('.audio-play-btn').textContent = '▶';
+                }
+            });
+
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        // Time update
+        audio.addEventListener('timeupdate', function() {
+            if (audio.duration) {
+                var pct = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = pct + '%';
+                timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+            }
+        });
+
+        // Click on progress bar to seek
+        progressBar.addEventListener('click', function(e) {
+            if (audio.duration) {
+                var rect = progressBar.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var pct = x / rect.width;
+                audio.currentTime = pct * audio.duration;
+            }
+        });
+
+        // Speed buttons
+        speedBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var speed = parseFloat(btn.dataset.speed);
+                audio.playbackRate = speed;
+                container.querySelectorAll('.speed-btn').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+            });
+        });
+
+        // When audio ends
+        audio.addEventListener('ended', function() {
+            playBtn.textContent = '▶';
+            saveAudioProgress(audioId, audio.duration, audio.duration);
+        });
+
+        // Save progress every 10 seconds
+        var saveInterval = null;
+        audio.addEventListener('play', function() {
+            saveInterval = setInterval(function() {
+                saveAudioProgress(audioId, audio.currentTime, audio.duration);
+            }, 10000);
+        });
+        audio.addEventListener('pause', function() {
+            clearInterval(saveInterval);
+            saveAudioProgress(audioId, audio.currentTime, audio.duration);
+        });
+
+        // Load saved progress
+        loadAudioProgress(audioId, audio);
+    });
+}
+
+async function saveAudioProgress(audioId, playbackTime, duration) {
+    if (!db || !state.user) return;
+    try {
+        await db.from('audio_progress').upsert({
+            user_id: state.user.id,
+            audio_id: audioId,
+            playback_time: playbackTime,
+            duration: duration,
+            updated_at: new Date().toISOString()
+        }, { onConflict: 'user_id,audio_id' });
+    } catch (e) {
+        // silently fail
+    }
+}
+
+async function loadAudioProgress(audioId, audio) {
+    if (!db || !state.user) return;
+    try {
+        var result = await db.from('audio_progress')
+            .select('playback_time')
+            .eq('user_id', state.user.id)
+            .eq('audio_id', audioId)
+            .single();
+
+        if (result.data && result.data.playback_time > 0) {
+            audio.addEventListener('loadedmetadata', function() {
+                audio.currentTime = result.data.playback_time;
+            }, { once: true });
+        }
+    } catch (e) {
+        // silently fail
+    }
 }

@@ -1327,6 +1327,120 @@ li {
     margin-bottom: 0.8rem;
 }
 
+/* ===== AUDIO PLAYER ===== */
+.audio-player-container {
+    background: linear-gradient(135deg, #1a2a3a, #2c4a5e);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.audio-player-header {
+    color: #e0e8ef;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.audio-player {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.audio-play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: var(--primary-dark);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    min-width: 40px;
+}
+
+.audio-play-btn:hover {
+    background: var(--accent-light);
+    transform: scale(1.05);
+}
+
+.audio-progress-wrap {
+    flex: 1;
+    min-width: 150px;
+}
+
+.audio-progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0.3rem;
+}
+
+.audio-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.audio-time {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    font-family: monospace;
+}
+
+.audio-speed {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.speed-btn {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.speed-btn:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: white;
+}
+
+.speed-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+@media (max-width: 480px) {
+    .audio-player {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .audio-play-btn {
+        align-self: center;
+    }
+    .audio-speed {
+        justify-content: center;
+    }
+}
+
 /* ===== AUTH TOGGLE (CSS-only) ===== */
 .auth-toggle-input {
     display: none;
