@@ -279,10 +279,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // Auth toggle links
+    var goToRegister = document.getElementById('goToRegister');
+    if (goToRegister) {
+        goToRegister.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            clearAuthErrors();
+        });
+    }
+
+    var goToLogin = document.getElementById('goToLogin');
+    if (goToLogin) {
+        goToLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            clearAuthErrors();
+        });
+    }
+
     // Check existing session
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session) {
-        await enterApp(session.user);
+    if (supabase) {
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                await enterApp(session.user);
+            } else {
+                showAuthScreen();
+            }
+        } catch (e) {
+            console.error('Erro ao verificar sessao:', e);
+            showAuthScreen();
+        }
     } else {
         showAuthScreen();
     }

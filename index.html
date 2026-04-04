@@ -32,7 +32,7 @@
                 </div>
                 <div class="auth-error hidden" id="loginError"></div>
                 <button type="submit" class="btn-primary btn-full" id="loginBtn">Entrar</button>
-                <p class="auth-switch">Ainda não tem conta? <a href="#" onclick="showRegister(event)">Cadastre-se</a></p>
+                <p class="auth-switch">Ainda não tem conta? <a href="#" id="goToRegister">Cadastre-se</a></p>
             </form>
 
             <!-- Register Form -->
@@ -57,7 +57,7 @@
                 <div class="auth-error hidden" id="registerError"></div>
                 <div class="auth-success hidden" id="registerSuccess"></div>
                 <button type="submit" class="btn-primary btn-full" id="regBtn">Criar Conta</button>
-                <p class="auth-switch">Já tem conta? <a href="#" onclick="showLogin(event)">Entrar</a></p>
+                <p class="auth-switch">Já tem conta? <a href="#" id="goToLogin">Entrar</a></p>
             </form>
         </div>
     </div>
