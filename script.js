@@ -1,24 +1,176 @@
+// ===== SUPABASE CONFIG =====
+const SUPABASE_URL = 'https://lwwokbownpdcmwptmnrs.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3d29rYm93bnBkY213cHRtbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTIwOTYsImV4cCI6MjA5MDg4ODA5Nn0.b8tHJUQAg1AiZW20Fj9lythhh7bikyxobyoN7ZSlhm0';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // ===== STATE =====
 const state = {
     currentModule: 'home',
-    completedModules: JSON.parse(localStorage.getItem('pe_completed') || '[]'),
-    quizAnswers: {}
+    completedModules: [],
+    quizAnswers: {},
+    user: null
 };
 
 const modules = ['modulo1','modulo2','modulo3','modulo4','modulo5','modulo6','modulo7','modulo8','modulo9','modulo10'];
 
+// ===== AUTH =====
+function showLogin(e) {
+    if (e) e.preventDefault();
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('registerForm').classList.add('hidden');
+    clearAuthErrors();
+}
+
+function showRegister(e) {
+    if (e) e.preventDefault();
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.remove('hidden');
+    clearAuthErrors();
+}
+
+function clearAuthErrors() {
+    document.querySelectorAll('.auth-error, .auth-success').forEach(el => {
+        el.classList.add('hidden');
+        el.textContent = '';
+    });
+}
+
+function showAuthError(formId, message) {
+    const el = document.getElementById(formId);
+    el.textContent = message;
+    el.classList.remove('hidden');
+}
+
+async function handleLogin(e) {
+    e.preventDefault();
+    clearAuthErrors();
+
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('loginBtn');
+
+    btn.disabled = true;
+    btn.textContent = 'Entrando...';
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+
+    if (error) {
+        let msg = 'Erro ao entrar. Verifique e-mail e senha.';
+        if (error.message.includes('Invalid login')) msg = 'E-mail ou senha incorretos.';
+        if (error.message.includes('Email not confirmed')) msg = 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.';
+        showAuthError('loginError', msg);
+        return;
+    }
+
+    await enterApp(data.user);
+}
+
+async function handleRegister(e) {
+    e.preventDefault();
+    clearAuthErrors();
+
+    const name = document.getElementById('regName').value.trim();
+    const parish = document.getElementById('regParish').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const btn = document.getElementById('regBtn');
+
+    if (name.length < 3) {
+        showAuthError('registerError', 'Digite seu nome completo.');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Criando conta...';
+
+    const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+            data: { full_name: name, parish: parish }
+        }
+    });
+
+    btn.disabled = false;
+    btn.textContent = 'Criar Conta';
+
+    if (error) {
+        let msg = 'Erro ao criar conta. Tente novamente.';
+        if (error.message.includes('already registered')) msg = 'Este e-mail ja esta cadastrado. Tente fazer login.';
+        showAuthError('registerError', msg);
+        return;
+    }
+
+    // Update parish if provided
+    if (parish && data.user) {
+        await supabase.from('profiles').update({ parish, full_name: name }).eq('id', data.user.id);
+    }
+
+    // Check if email confirmation is required
+    if (data.user && !data.session) {
+        const el = document.getElementById('registerSuccess');
+        el.textContent = 'Conta criada! Verifique seu e-mail para confirmar o cadastro.';
+        el.classList.remove('hidden');
+    } else if (data.session) {
+        await enterApp(data.user);
+    }
+}
+
+async function handleLogout() {
+    await supabase.auth.signOut();
+    state.user = null;
+    state.completedModules = [];
+    showAuthScreen();
+}
+
+function showAuthScreen() {
+    document.getElementById('authScreen').classList.remove('hidden');
+    document.getElementById('appHeader').classList.add('hidden');
+    document.getElementById('sidebar').classList.add('hidden');
+    document.getElementById('mainContent').classList.add('hidden');
+    document.getElementById('appFooter').classList.add('hidden');
+}
+
+function showApp() {
+    document.getElementById('authScreen').classList.add('hidden');
+    document.getElementById('appHeader').classList.remove('hidden');
+    document.getElementById('sidebar').classList.remove('hidden');
+    document.getElementById('mainContent').classList.remove('hidden');
+    document.getElementById('appFooter').classList.remove('hidden');
+}
+
+async function enterApp(user) {
+    state.user = user;
+
+    // Get profile
+    const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+
+    const displayName = profile?.full_name || user.user_metadata?.full_name || user.email;
+    document.getElementById('userName').textContent = displayName;
+
+    // Load progress from Supabase
+    const { data: progress } = await supabase.from('module_progress').select('module_id').eq('user_id', user.id);
+
+    state.completedModules = progress ? progress.map(p => p.module_id) : [];
+
+    showApp();
+    updateProgress();
+    navigateTo('home');
+}
+
 // ===== NAVIGATION =====
 function navigateTo(moduleId) {
-    // Hide all modules
     document.querySelectorAll('.module').forEach(m => m.classList.add('hidden'));
 
-    // Show target
     const target = document.getElementById(moduleId);
     if (target) {
         target.classList.remove('hidden');
         state.currentModule = moduleId;
 
-        // Update nav
         document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
             if (link.dataset.module === moduleId) {
@@ -26,27 +178,29 @@ function navigateTo(moduleId) {
             }
         });
 
-        // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        // Close mobile sidebar
         closeSidebar();
 
-        // Initialize quiz if needed
         if (moduleId === 'quiz') {
             initQuiz();
         }
     }
 }
 
-function completeModule(moduleId) {
+async function completeModule(moduleId) {
     if (!state.completedModules.includes(moduleId)) {
         state.completedModules.push(moduleId);
-        localStorage.setItem('pe_completed', JSON.stringify(state.completedModules));
+
+        // Save to Supabase
+        if (state.user) {
+            await supabase.from('module_progress').upsert({
+                user_id: state.user.id,
+                module_id: moduleId
+            }, { onConflict: 'user_id,module_id' });
+        }
     }
     updateProgress();
 
-    // Navigate to next module
     const idx = modules.indexOf(moduleId);
     if (idx < modules.length - 1) {
         navigateTo(modules[idx + 1]);
@@ -65,11 +219,12 @@ function updateProgress() {
     if (fill) fill.style.width = pct + '%';
     if (text) text.textContent = pct + '% concluido (' + completed + '/' + total + ')';
 
-    // Update nav links
     document.querySelectorAll('.nav-link').forEach(link => {
         const mod = link.dataset.module;
         if (state.completedModules.includes(mod)) {
             link.classList.add('completed');
+        } else {
+            link.classList.remove('completed');
         }
     });
 }
@@ -78,11 +233,12 @@ function updateProgress() {
 function closeSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('overlay');
-    sidebar.classList.remove('open');
-    overlay.classList.remove('active');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('active');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async () => {
     // Menu toggle
     const menuBtn = document.querySelector('.menu-toggle');
     const sidebar = document.getElementById('sidebar');
@@ -103,8 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const moduleId = link.dataset.module;
-            navigateTo(moduleId);
+            navigateTo(link.dataset.module);
         });
     });
 
@@ -113,164 +268,168 @@ document.addEventListener('DOMContentLoaded', () => {
         header.addEventListener('click', () => {
             const item = header.parentElement;
             const isOpen = item.classList.contains('open');
-            // Close others in same accordion
             item.parentElement.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
             if (!isOpen) item.classList.add('open');
         });
     });
 
-    // Update progress on load
-    updateProgress();
+    // Check existing session
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+        await enterApp(session.user);
+    } else {
+        showAuthScreen();
+    }
 });
 
 // ===== QUIZ =====
 const quizQuestions = [
     {
-        q: "O que significa a palavra 'animar', raiz da missão da Pastoral da Esperança?",
+        q: "O que significa a palavra 'animar', raiz da missao da Pastoral da Esperanca?",
         options: [
             "Fazer festa e divertir as pessoas",
-            "Dar alento à alma (do latim 'anima' = alma)",
-            "Organizar eventos na paróquia",
-            "Cantar e tocar músicas alegres"
+            "Dar alento a alma (do latim 'anima' = alma)",
+            "Organizar eventos na paroquia",
+            "Cantar e tocar musicas alegres"
         ],
         correct: 1
     },
     {
-        q: "Qual é o elemento essencial que a Pastoral da Esperança deve levar?",
+        q: "Qual e o elemento essencial que a Pastoral da Esperanca deve levar?",
         options: [
-            "Flores e presentes para a família",
+            "Flores e presentes para a familia",
             "Dinheiro para ajudar nas despesas",
-            "Esperança, sobretudo na ressurreição",
-            "Comida e bebida para o velório"
+            "Esperanca, sobretudo na ressurreicao",
+            "Comida e bebida para o velorio"
         ],
         correct: 2
     },
     {
-        q: "A atuação da Pastoral da Esperança se limita ao velório?",
+        q: "A atuacao da Pastoral da Esperanca se limita ao velorio?",
         options: [
-            "Sim, apenas durante o velório",
-            "Sim, no velório e no sepultamento",
-            "Não, vai desde a prevenção até a elaboração do luto",
-            "Não, mas apenas até a missa de 7º dia"
+            "Sim, apenas durante o velorio",
+            "Sim, no velorio e no sepultamento",
+            "Nao, vai desde a prevencao ate a elaboracao do luto",
+            "Nao, mas apenas ate a missa de 7o dia"
         ],
         correct: 2
     },
     {
-        q: "Quantas pessoas são necessárias para iniciar a Pastoral da Esperança?",
+        q: "Quantas pessoas sao necessarias para iniciar a Pastoral da Esperanca?",
         options: [
-            "No mínimo 10 pessoas",
-            "Apenas o padre é suficiente",
-            "Com 3 ou 4 pessoas já dá para começar",
-            "É preciso ter pelo menos 20 voluntários"
+            "No minimo 10 pessoas",
+            "Apenas o padre e suficiente",
+            "Com 3 ou 4 pessoas ja da para comecar",
+            "E preciso ter pelo menos 20 voluntarios"
         ],
         correct: 2
     },
     {
-        q: "Qual deve ser a postura da pastoral em relação à dependência do padre?",
+        q: "Qual deve ser a postura da pastoral em relacao a dependencia do padre?",
         options: [
-            "Toda ação deve ter a presença obrigatória do padre",
-            "Trabalhar com ou sem a presença do padre, mantendo-o informado",
-            "O padre não deve saber das ações da pastoral",
-            "Só atuar quando o padre mandar"
+            "Toda acao deve ter a presenca obrigatoria do padre",
+            "Trabalhar com ou sem a presenca do padre, mantendo-o informado",
+            "O padre nao deve saber das acoes da pastoral",
+            "So atuar quando o padre mandar"
         ],
         correct: 1
     },
     {
-        q: "Quais são as três dimensões da formação dos agentes?",
+        q: "Quais sao as tres dimensoes da formacao dos agentes?",
         options: [
-            "Musical, artística e esportiva",
-            "Teórica, prática e espiritual",
-            "Financeira, administrativa e jurídica",
-            "Litúrgica, catequética e social"
+            "Musical, artistica e esportiva",
+            "Teorica, pratica e espiritual",
+            "Financeira, administrativa e juridica",
+            "Liturgica, catequetica e social"
         ],
         correct: 1
     },
     {
-        q: "Sobre a vestimenta do agente, qual é a orientação correta?",
+        q: "Sobre a vestimenta do agente, qual e a orientacao correta?",
         options: [
             "Pode ir com qualquer roupa",
             "Deve usar roupa preta obrigatoriamente",
-            "Vestir-se adequadamente, de acordo com o ambiente, de preferência com veste própria da pastoral",
-            "Não há orientação sobre vestimenta"
+            "Vestir-se adequadamente, com veste propria da pastoral",
+            "Nao ha orientacao sobre vestimenta"
         ],
         correct: 2
     },
     {
-        q: "O que fazer se oferecerem dinheiro ao agente pelos seus serviços?",
+        q: "O que fazer se oferecerem dinheiro ao agente pelos seus servicos?",
         options: [
             "Aceitar normalmente",
             "Aceitar e dividir com a equipe",
-            "Recusar e sugerir doação à paróquia",
+            "Recusar e sugerir doacao a paroquia",
             "Aceitar apenas se for pouco"
         ],
         correct: 2
     },
     {
-        q: "Antes de fazer uma celebração de exéquias no velório, o que se deve fazer primeiro?",
+        q: "Antes de fazer uma celebracao de exequias no velorio, o que se deve fazer primeiro?",
         options: [
-            "Começar imediatamente a oração",
-            "Consultar a família se deseja a presença da Igreja Católica",
-            "Distribuir panfletos da paróquia",
-            "Criticar outras religiões presentes"
+            "Comecar imediatamente a oracao",
+            "Consultar a familia se deseja a presenca da Igreja Catolica",
+            "Distribuir panfletos da paroquia",
+            "Criticar outras religioes presentes"
         ],
         correct: 1
     },
     {
-        q: "Qual é a postura correta se houver líder de outra denominação religiosa no velório?",
+        q: "Qual e a postura correta se houver lider de outra denominacao religiosa no velorio?",
         options: [
-            "Ignorá-lo completamente",
+            "Ignora-lo completamente",
             "Pedir que ele se retire",
-            "Convidá-lo respeitosamente para participar da celebração",
-            "Fazer uma pregação contra sua religião"
+            "Convida-lo respeitosamente para participar da celebracao",
+            "Fazer uma pregacao contra sua religiao"
         ],
         correct: 2
     },
     {
-        q: "Quais são os quatro ritos da celebração de exéquias?",
+        q: "Quais sao os quatro ritos da celebracao de exequias?",
         options: [
-            "Entrada, Homilia, Comunhão e Saída",
-            "Ritos Iniciais, Rito da Palavra, Rito de Encomendação e Rito Final",
-            "Acolhida, Canto, Oração e Despedida",
-            "Leitura, Reflexão, Oração e Bênção"
+            "Entrada, Homilia, Comunhao e Saida",
+            "Ritos Iniciais, Rito da Palavra, Rito de Encomendacao e Rito Final",
+            "Acolhida, Canto, Oracao e Despedida",
+            "Leitura, Reflexao, Oracao e Bencao"
         ],
         correct: 1
     },
     {
         q: "O que significa a palavra 'missa' em latim?",
         options: [
-            "Sacrifício",
-            "Celebração",
+            "Sacrificio",
+            "Celebracao",
             "Despedida",
             "Encontro"
         ],
         correct: 2
     },
     {
-        q: "Por que a missa é celebrada no 7º dia após a morte?",
+        q: "Por que a missa e celebrada no 7o dia apos a morte?",
         options: [
-            "Por motivos práticos apenas",
-            "Porque o número 7 na Bíblia simboliza plenitude e completude — Deus descansou no 7º dia",
-            "Por decisão do Vaticano II",
-            "Não há razão específica"
+            "Por motivos praticos apenas",
+            "Porque o numero 7 na Biblia simboliza plenitude e completude",
+            "Por decisao do Vaticano II",
+            "Nao ha razao especifica"
         ],
         correct: 1
     },
     {
-        q: "Sobre a cremação, qual é a posição da Igreja Católica?",
+        q: "Sobre a cremacao, qual e a posicao da Igreja Catolica?",
         options: [
-            "Proíbe totalmente a cremação",
-            "Permite, desde que não manifeste posição contrária à fé na ressurreição",
-            "Só permite em casos excepcionais",
-            "Não tem posição sobre o assunto"
+            "Proibe totalmente a cremacao",
+            "Permite, desde que nao manifeste posicao contraria a fe na ressurreicao",
+            "So permite em casos excepcionais",
+            "Nao tem posicao sobre o assunto"
         ],
         correct: 1
     },
     {
-        q: "Qual é a atitude correta quando uma pessoa enlutada diz que 'Deus castigou' a família?",
+        q: "Qual e a atitude correta quando uma pessoa enlutada diz que 'Deus castigou' a familia?",
         options: [
-            "Concordar para não contrariar",
-            "Dizer que ela está errada de forma direta",
-            "Mostrar com delicadeza que Deus não pune nem castiga, e que Ele quer a vida",
+            "Concordar para nao contrariar",
+            "Dizer que ela esta errada de forma direta",
+            "Mostrar com delicadeza que Deus nao pune nem castiga, e que Ele quer a vida",
             "Mudar de assunto"
         ],
         correct: 2
@@ -311,7 +470,6 @@ function initQuiz() {
 function selectOption(questionIdx, optionIdx) {
     state.quizAnswers[questionIdx] = optionIdx;
 
-    // Update visuals
     const options = document.querySelectorAll(`[data-question="${questionIdx}"]`);
     options.forEach(opt => {
         opt.classList.remove('selected');
@@ -321,18 +479,17 @@ function selectOption(questionIdx, optionIdx) {
     });
 }
 
-function submitQuiz() {
+async function submitQuiz() {
     const total = quizQuestions.length;
     const answeredCount = Object.keys(state.quizAnswers).length;
 
     if (answeredCount < total) {
-        alert(`Por favor, responda todas as ${total} questoes antes de enviar. Voce respondeu ${answeredCount} de ${total}.`);
+        alert('Por favor, responda todas as ' + total + ' questoes antes de enviar. Voce respondeu ' + answeredCount + ' de ' + total + '.');
         return;
     }
 
     let score = 0;
 
-    // Show correct/incorrect
     quizQuestions.forEach((q, i) => {
         const options = document.querySelectorAll(`[data-question="${i}"]`);
         options.forEach(opt => {
@@ -351,6 +508,16 @@ function submitQuiz() {
             score++;
         }
     });
+
+    // Save to Supabase
+    if (state.user) {
+        await supabase.from('quiz_results').insert({
+            user_id: state.user.id,
+            score: score,
+            total: total,
+            answers: state.quizAnswers
+        });
+    }
 
     // Hide submit button
     document.querySelector('.quiz-submit').style.display = 'none';
@@ -375,8 +542,6 @@ function submitQuiz() {
     }
 
     document.getElementById('scoreMessage').textContent = message;
-
-    // Scroll to results
     results.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 

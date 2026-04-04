@@ -7,10 +7,63 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <!-- Login Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            <div class="auth-header">
+                <span class="auth-logo">✝</span>
+                <h1>Pastoral da Esperança</h1>
+                <p>Treinamento de Voluntários</p>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+                <h2>Entrar</h2>
+                <div class="form-group">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" required placeholder="Sua senha" minlength="6">
+                </div>
+                <div class="auth-error hidden" id="loginError"></div>
+                <button type="submit" class="btn-primary btn-full" id="loginBtn">Entrar</button>
+                <p class="auth-switch">Ainda não tem conta? <a href="#" onclick="showRegister(event)">Cadastre-se</a></p>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+                <h2>Cadastro</h2>
+                <div class="form-group">
+                    <label for="regName">Nome Completo</label>
+                    <input type="text" id="regName" required placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="regParish">Paróquia (opcional)</label>
+                    <input type="text" id="regParish" placeholder="Nome da sua paróquia">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">E-mail</label>
+                    <input type="email" id="regEmail" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Senha</label>
+                    <input type="password" id="regPassword" required placeholder="Mínimo 6 caracteres" minlength="6">
+                </div>
+                <div class="auth-error hidden" id="registerError"></div>
+                <div class="auth-success hidden" id="registerSuccess"></div>
+                <button type="submit" class="btn-primary btn-full" id="regBtn">Criar Conta</button>
+                <p class="auth-switch">Já tem conta? <a href="#" onclick="showLogin(event)">Entrar</a></p>
+            </form>
+        </div>
+    </div>
+
     <!-- Header -->
-    <header class="main-header">
+    <header class="main-header hidden" id="appHeader">
         <div class="header-content">
             <div class="logo">
                 <span class="logo-icon">✝</span>
@@ -19,12 +72,16 @@
                     <p class="subtitle">O Rosto Solidário da Igreja no Luto e na Dor</p>
                 </div>
             </div>
-            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <div class="header-right">
+                <span class="user-name" id="userName"></span>
+                <button class="btn-logout" onclick="handleLogout()">Sair</button>
+                <button class="menu-toggle" aria-label="Menu">☰</button>
+            </div>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav class="sidebar" id="sidebar">
+    <nav class="sidebar hidden" id="sidebar">
         <div class="nav-header">
             <h3>Módulos de Formação</h3>
             <div class="progress-bar">
@@ -76,7 +133,7 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- Main Content -->
-    <main class="content" id="mainContent">
+    <main class="content hidden" id="mainContent">
 
         <!-- HOME -->
         <section class="module" id="home">
@@ -1154,7 +1211,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="main-footer">
+    <footer class="main-footer hidden" id="appFooter">
         <p>Pastoral da Esperança — Material de formação baseado no livro de José Carlos Pereira (Editora Vozes, 2015)</p>
         <p>Desenvolvido para a formação de voluntários</p>
     </footer>
