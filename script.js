@@ -2,7 +2,13 @@
 const SUPABASE_URL = 'https://lwwokbownpdcmwptmnrs.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3d29rYm93bnBkY213cHRtbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTIwOTYsImV4cCI6MjA5MDg4ODA5Nn0.b8tHJUQAg1AiZW20Fj9lythhh7bikyxobyoN7ZSlhm0';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let sb = null;
+try {
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} catch (e) {
+    console.error('Erro ao conectar com Supabase:', e);
+}
+const supabase = sb;
 
 // ===== STATE =====
 const state = {

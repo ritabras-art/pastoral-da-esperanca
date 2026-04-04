@@ -24,6 +24,11 @@
     --transition: 0.3s ease;
 }
 
+/* ===== GLOBAL HIDDEN ===== */
+.hidden {
+    display: none !important;
+}
+
 /* ===== RESET ===== */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -1210,10 +1215,6 @@ li {
     padding: 1rem;
 }
 
-.auth-screen.hidden {
-    display: none;
-}
-
 .auth-container {
     background: var(--bg-white);
     border-radius: var(--radius);
@@ -1249,10 +1250,6 @@ li {
 
 .auth-form {
     padding: 1.8rem 2rem 2rem;
-}
-
-.auth-form.hidden {
-    display: none;
 }
 
 .auth-form h2 {
@@ -1320,10 +1317,6 @@ li {
     margin-bottom: 0.8rem;
 }
 
-.auth-error.hidden {
-    display: none;
-}
-
 .auth-success {
     background: #e8f5e9;
     border: 1px solid #c3e6cb;
@@ -1332,10 +1325,6 @@ li {
     border-radius: var(--radius-sm);
     font-size: 0.85rem;
     margin-bottom: 0.8rem;
-}
-
-.auth-success.hidden {
-    display: none;
 }
 
 /* ===== HEADER RIGHT ===== */
