@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastoral da Esperança - Treinamento de Voluntários</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">✝</span>
+                <div>
+                    <h1>Pastoral da Esperança</h1>
+                    <p class="subtitle">O Rosto Solidário da Igreja no Luto e na Dor</p>
+                </div>
+            </div>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="nav-header">
+            <h3>Módulos de Formação</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="globalProgress"></div>
+            </div>
+            <span class="progress-text" id="progressText">0% concluído</span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="#home" class="nav-link active" data-module="home">
+                <span class="nav-icon">🏠</span> Início
+            </a></li>
+            <li><a href="#modulo1" class="nav-link" data-module="modulo1">
+                <span class="nav-icon">📖</span> Módulo 1: O que é a Pastoral
+            </a></li>
+            <li><a href="#modulo2" class="nav-link" data-module="modulo2">
+                <span class="nav-icon">📍</span> Módulo 2: Campo de Atuação
+            </a></li>
+            <li><a href="#modulo3" class="nav-link" data-module="modulo3">
+                <span class="nav-icon">👥</span> Módulo 3: Organização de Equipes
+            </a></li>
+            <li><a href="#modulo4" class="nav-link" data-module="modulo4">
+                <span class="nav-icon">🎓</span> Módulo 4: Formação do Agente
+            </a></li>
+            <li><a href="#modulo5" class="nav-link" data-module="modulo5">
+                <span class="nav-icon">✅</span> Módulo 5: Procedimentos Corretos
+            </a></li>
+            <li><a href="#modulo6" class="nav-link" data-module="modulo6">
+                <span class="nav-icon">⚠️</span> Módulo 6: O que Evitar
+            </a></li>
+            <li><a href="#modulo7" class="nav-link" data-module="modulo7">
+                <span class="nav-icon">🤝</span> Módulo 7: Coordenação
+            </a></li>
+            <li><a href="#modulo8" class="nav-link" data-module="modulo8">
+                <span class="nav-icon">🕯️</span> Módulo 8: Celebração de Exéquias
+            </a></li>
+            <li><a href="#modulo9" class="nav-link" data-module="modulo9">
+                <span class="nav-icon">⛪</span> Módulo 9: Missa de 7º Dia
+            </a></li>
+            <li><a href="#modulo10" class="nav-link" data-module="modulo10">
+                <span class="nav-icon">💜</span> Módulo 10: O Luto e Finados
+            </a></li>
+            <li><a href="#quiz" class="nav-link" data-module="quiz">
+                <span class="nav-icon">📝</span> Avaliação Final
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main class="content" id="mainContent">
+
+        <!-- HOME -->
+        <section class="module" id="home">
+            <div class="hero">
+                <div class="hero-text">
+                    <h2>Bem-vindo(a) ao Treinamento da<br>Pastoral da Esperança</h2>
+                    <p class="hero-subtitle">A resposta missionária para acolher a perda e a dor, com a presença que anima e resgata a esperança na ressurreição.</p>
+                    <blockquote class="hero-quote">
+                        "A morte não é nada. Eu somente passei para o outro lado do caminho. Eu sou eu, vocês são vocês. O que eu era para vocês, eu continuarei sendo."
+                        <cite>— Texto atribuído a Santo Agostinho</cite>
+                    </blockquote>
+                    <button class="btn-primary" onclick="navigateTo('modulo1')">Começar Formação →</button>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="info-card">
+                    <div class="card-icon">📖</div>
+                    <h3>10 Módulos</h3>
+                    <p>Formação completa baseada no livro de José Carlos Pereira e materiais complementares</p>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Prático e Teórico</h3>
+                    <p>Conteúdo que prepara para a atuação no dia a dia da pastoral</p>
+                </div>
+                <div class="info-card">
+                    <div class="card-icon">📝</div>
+                    <h3>Avaliação</h3>
+                    <p>Quiz final para verificar a compreensão de cada módulo estudado</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Sobre este Treinamento</h3>
+                <p>Este treinamento foi desenvolvido para preparar voluntários que desejam atuar na <strong>Pastoral da Esperança</strong>. O conteúdo é baseado no livro <em>"Pastoral da Esperança: Subsídio de implantação, formação e atuação de agentes"</em>, do Padre José Carlos Pereira (Editora Vozes, 2015), complementado por materiais adicionais e orientações do Padre Matheus.</p>
+                <p>A Pastoral da Esperança é um serviço que a Igreja presta às pessoas e famílias que passam pela dor da perda de um ente querido. Uma paróquia em estado permanente de missão não pode deixar de investir nesta pastoral.</p>
+            </div>
+
+            <div class="section-block highlight-block">
+                <h3>O que você aprenderá</h3>
+                <div class="learning-list">
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>O que é e qual a missão da Pastoral da Esperança</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>Onde e quando os agentes devem atuar</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>Como formar e organizar equipes</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>A formação teórica, prática e espiritual necessária</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>Procedimentos corretos e o que deve ser evitado</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>Como coordenar a pastoral com excelência</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>Conduzir celebrações de exéquias e missas de 7º dia</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check">✓</span>
+                        <span>Compreender o luto e seus significados</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 1 -->
+        <section class="module hidden" id="modulo1">
+            <div class="module-header">
+                <span class="module-badge">Módulo 1</span>
+                <h2>O que é e o que faz a Pastoral da Esperança</h2>
+                <p class="module-desc">Compreendendo a identidade, missão e fundamento bíblico desta pastoral</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Identidade e Missão</h3>
+                <p>A Pastoral da Esperança tem como objetivo <strong>levar a esperança àqueles que, por motivo da perda de um ente querido, também perderam — ou estão em vias de perder — a esperança</strong>.</p>
+                <p>A missão é <strong>animar</strong> as pessoas e famílias para que não percam o brilho de viver por causa da perda de um ente querido.</p>
+
+                <div class="concept-box">
+                    <h4>💡 O significado de "Animar"</h4>
+                    <p>A palavra <strong>"animar"</strong> vem de <em>anima</em>, que significa <strong>alma</strong>. Animar é dar alento à alma. A missão da Pastoral da Esperança é grandiosa e desafiadora, pois lida com um momento muito difícil da vida das pessoas — uma dor tão profunda que toca a alma.</p>
+                    <p>Os agentes buscam <strong>tocar a alma das pessoas enlutadas e reerguê-las</strong> de suas prostrações para a vida. Ao mesmo tempo em que confortam e animam, os agentes rezam pela família e pela alma do ente querido.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Presença Evangelizadora</h3>
+                <p>A presença da Pastoral da Esperança junto às famílias enlutadas é, sobretudo, <strong>esperança na ressurreição</strong>. Mas é também esperança nesta vida, pois embora a família tenha perdido um membro, a vida continua.</p>
+
+                <div class="bible-verse">
+                    <p>"O Espírito do Senhor está sobre mim, porque ele me ungiu para evangelizar os pobres; enviou-me para proclamar a libertação aos cativos e, aos cegos, a recuperação da vista; para pôr em liberdade os oprimidos."</p>
+                    <cite>— Lucas 4,18-20 (cf. Isaías 61,1-3)</cite>
+                </div>
+
+                <p>É esta também a missão da Pastoral da Esperança e dos seus agentes: guiados pelo Espírito Santo, <strong>anunciar a Boa Notícia àqueles que receberam a pior notícia de suas vidas</strong> — a morte de um ente querido.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>O Grande Desafio</h3>
+                <p><strong>Como falar de vida e de esperança numa situação de morte?</strong></p>
+                <p>Esta questão nos faz lembrar de Marta e Maria por ocasião da morte de Lázaro. Quando Jesus encontra Marta, ela diz: <em>"Senhor, se estivesses aqui, meu irmão não teria morrido"</em> (Jo 11,21).</p>
+                <p>Esta expressão revela, ao mesmo tempo, uma <strong>confiança plena em Jesus</strong>, mas também um <strong>sentimento de abandono</strong> — a ausência de Deus num momento de profunda dificuldade.</p>
+
+                <div class="alert-box">
+                    <h4>⚠️ Importante compreender</h4>
+                    <p>Muitas pessoas sentem que o ente querido morreu porque Deus não estava ali. O sentimento de abandono, ausência ou punição divina é comum. Cabe à Pastoral da Esperança mostrar que:</p>
+                    <ul>
+                        <li>Deus <strong>não pune nem castiga</strong> com a morte</li>
+                        <li>Deus <strong>não quer a morte, mas a vida</strong> (Ez 18,23; 2Pd 3,9)</li>
+                        <li>Se a pessoa morreu para este mundo, <strong>cumpriu sua missão</strong></li>
+                        <li>A vida não acaba — <strong>Deus está presente e cuida de nós</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Protagonismo dos Leigos</h3>
+                <p>A Pastoral da Esperança pode e deve dar protagonismo aos leigos, formando agentes que ajam com ardor missionário, <strong>sem dependência da figura do padre</strong>. A função da pastoral é fazer o acompanhamento, com ou sem a presença do pároco.</p>
+                <p>Falamos muito hoje do protagonismo dos leigos na Igreja, e a Pastoral da Esperança é uma excelente oportunidade para isso.</p>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('home')">← Início</button>
+                <button class="btn-complete" onclick="completeModule('modulo1')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo2')">Módulo 2 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 2 -->
+        <section class="module hidden" id="modulo2">
+            <div class="module-header">
+                <span class="module-badge">Módulo 2</span>
+                <h2>Onde atua a Pastoral da Esperança</h2>
+                <p class="module-desc">O campo de ação: desde o momento da perda até a elaboração do luto</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Campo de Ação</h3>
+                <p>A Pastoral da Esperança <strong>não deve limitar suas ações apenas nas celebrações de corpo presente ou nos ritos de exéquias</strong>. Ela atua nos momentos de dor, que vão desde o momento da perda, passando pelos dias que sucedem a morte, até que a pessoa ou família se sinta melhor.</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h4>Prevenção e Acompanhamento</h4>
+                            <p>Visitas a doentes graves, idosos e famílias com membros em estado terminal. Preparação espiritual da família para uma possível perda, em conjunto com Pastoral da Saúde e Ministros da Comunhão.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h4>O Momento da Morte</h4>
+                            <p>Atuação no dia da morte, no velório e no sepultamento, com assistência amiga e religiosa. Condução da celebração de exéquias e conforto aos familiares.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h4>Pós-Sepultamento</h4>
+                            <p>Visitas domiciliares e oração nos dias seguintes. Sugestão de novena na casa da família. Preparação da missa de 7º dia junto à família.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h4>Extrapolando o Velório</h4>
+                            <p>Apoio a casos de doenças crônicas, problemas psíquicos e velhos, levando mensagens de superação. O tempo de acompanhamento varia com cada caso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Detalhamento dos Momentos de Atuação</h3>
+
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🏥 Prevenção e Preparação</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Quando uma paróquia é verdadeiramente missionária, seus membros se conhecem e se ajudam. Desde o momento em que se fica sabendo que uma família tem algum membro gravemente enfermo, a Pastoral da Esperança já pode começar a agir:</p>
+                            <ul>
+                                <li>Visitar a família e a pessoa doente</li>
+                                <li>Confortar e preparar para o passamento, sem ser prenúncio de morte</li>
+                                <li>Trabalho em conjunto com Pastoral da Saúde e Pessoa Idosa</li>
+                                <li>Esclarecer sobre o Sacramento da Unção dos Enfermos</li>
+                                <li>Providenciar visita do sacerdote</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>⚰️ No Dia da Morte e Velório</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>O dia da morte é uma ocasião importante para os agentes se fazerem presentes:</p>
+                            <ul>
+                                <li>Conduzir a celebração das exéquias</li>
+                                <li>Fazer revezamento dos agentes durante todo o velório</li>
+                                <li>Confortar os familiares com presença discreta</li>
+                                <li>Acompanhar o féretro até o local do sepultamento</li>
+                                <li>Colocar-se à disposição após o sepultamento</li>
+                                <li>Agendar com a família a missa de 7º dia</li>
+                            </ul>
+                            <div class="tip-box">
+                                <strong>Dica:</strong> Procure perceber se sua presença de fato ajuda, pois pode ser que a família queira ficar a sós. Use de bom-senso. O mais importante é que a família saiba que há pessoas da Igreja com quem poderá contar.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🏠 Acompanhamento Pós-Morte</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>Este é um dos procedimentos <strong>mais importantes</strong> da pastoral — o acompanhamento da família nos dias que seguem à morte:</p>
+                            <ul>
+                                <li>Fazer visitas à família, colocando-se à disposição</li>
+                                <li>Sugerir uma novena em casa, na igreja ou em lugar confortável</li>
+                                <li>Ser presença discreta e confortadora, sem invadir a intimidade</li>
+                                <li>Acompanhar a família até que esteja bem fortalecida</li>
+                                <li>O tempo de acompanhamento varia de acordo com cada caso</li>
+                            </ul>
+                            <div class="alert-box">
+                                <p><strong>A pastoral não deve depender da presença do padre.</strong> A função é fazer esse acompanhamento com ou sem o pároco. Apenas mantenha-o informado das ações.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo1')">← Módulo 1</button>
+                <button class="btn-complete" onclick="completeModule('modulo2')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo3')">Módulo 3 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 3 -->
+        <section class="module hidden" id="modulo3">
+            <div class="module-header">
+                <span class="module-badge">Módulo 3</span>
+                <h2>A Organização de Equipes</h2>
+                <p class="module-desc">Como implantar e organizar a Pastoral da Esperança na paróquia</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Quem pode participar?</h3>
+                <p>Qualquer pessoa de boa vontade que tenha <strong>identificação</strong> com essas situações e que tenha <strong>condição e disponibilidade</strong> para ajudar em qualquer momento — pois a morte não tem dia e hora marcados.</p>
+                <p>É preciso que seja formada uma equipe para que, quando for preciso atuar, haja uma ou mais pessoas disponíveis.</p>
+
+                <div class="concept-box">
+                    <h4>💡 Vocação Especial</h4>
+                    <p>É uma <strong>vocação</strong> esse trabalho. Não podem ser pessoas que não se sintam bem em velórios, ou que tenham algum trauma com a morte. Devem ser pessoas que transpareçam <strong>segurança, firmeza</strong> e saibam animar quem está sofrendo.</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Passos para Implantação</h3>
+                <div class="steps-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Levar ao CPP</h4>
+                            <p>Apresentar a proposta na reunião do Conselho Paroquial de Pastoral. Os coordenadores poderão apoiar e indicar pessoas.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Recrutar Membros</h4>
+                            <p>Anunciar nas missas, boletins, murais e meios de comunicação da paróquia. Convidar pessoalmente quem tem perfil.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Formar a Equipe</h4>
+                            <p>Com 3 ou 4 pessoas já dá para começar. O mais relevante é ter alguém que coordene, além do padre.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Capacitar os Agentes</h4>
+                            <p>Oferecer formação básica antes de ir a campo. Só então enviar para a missão.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Distribuir Funções</h4>
+                            <p>Criar escalas para velórios, visitas, celebrações, novenas e missas de 7º ou 30º dia.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Perfil do Coordenador</h3>
+                <div class="profile-traits">
+                    <div class="trait"><span class="trait-icon">👂</span><strong>Responsabilidade</strong> — O bom êxito da pastoral depende em grande parte dele</div>
+                    <div class="trait"><span class="trait-icon">⏰</span><strong>Disponibilidade</strong> — Para velórios, visitas, reuniões e acompanhamento</div>
+                    <div class="trait"><span class="trait-icon">❤️</span><strong>Identificação</strong> — Deve gostar daquilo que faz e se sentir vocacionado</div>
+                    <div class="trait"><span class="trait-icon">🌟</span><strong>Liderança</strong> — Desenvoltura e espírito de liderança para conduzir a equipe</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Reuniões</h3>
+                <p>As reuniões devem ser <strong>mensais</strong>, ou de acordo com a necessidade. Nelas são avaliados os trabalhos e traçadas novas metas. O coordenador deve participar também das reuniões do CPP, sendo a ponte entre a pastoral e o conselho paroquial.</p>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo2')">← Módulo 2</button>
+                <button class="btn-complete" onclick="completeModule('modulo3')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo4')">Módulo 4 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 4 -->
+        <section class="module hidden" id="modulo4">
+            <div class="module-header">
+                <span class="module-badge">Módulo 4</span>
+                <h2>A Formação dos Agentes</h2>
+                <p class="module-desc">Preparação teórica, prática e espiritual para o serviço pastoral</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Por que a Formação é Essencial?</h3>
+                <p>Quem atua nesta pastoral lida com <strong>momentos-limite</strong> na vida da pessoa. Nem todas as pessoas estão preparadas para lidar com essas situações. <strong>Não envie para a missão pessoas despreparadas</strong>, pois isso pode atrapalhar o trabalho e expor a pessoa e a comunidade.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>As Três Dimensões da Formação</h3>
+                <div class="cards-grid three-cols">
+                    <div class="formation-card">
+                        <div class="formation-icon">📚</div>
+                        <h4>Formação Teórica</h4>
+                        <ul>
+                            <li>Cursos e palestras sobre a pastoral</li>
+                            <li>Vídeos e filmes sobre o tema da morte</li>
+                            <li>Apostilas com temas específicos</li>
+                            <li>Leitura de subsídios e materiais</li>
+                            <li>Noções básicas de psicologia</li>
+                            <li>Estudo de escatologia</li>
+                        </ul>
+                    </div>
+                    <div class="formation-card">
+                        <div class="formation-icon">🤝</div>
+                        <h4>Formação Prática</h4>
+                        <ul>
+                            <li>Acompanhar agentes experientes</li>
+                            <li>Ir a velórios como observador</li>
+                            <li>Assistir celebrações de exéquias</li>
+                            <li>Acompanhar visitas às famílias</li>
+                            <li>Participar de missas de corpo presente</li>
+                            <li>Partilha de experiências nas reuniões</li>
+                        </ul>
+                    </div>
+                    <div class="formation-card">
+                        <div class="formation-icon">🙏</div>
+                        <h4>Formação Espiritual</h4>
+                        <ul>
+                            <li>Vida de oração pessoal</li>
+                            <li>Pelo menos 2 retiros por ano</li>
+                            <li>Lectio divina com textos bíblicos</li>
+                            <li>Acompanhamento espiritual</li>
+                            <li>Espiritualidade da escuta</li>
+                            <li>Leitura de livros de espiritualidade</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Textos Bíblicos para Estudo</h3>
+                <div class="bible-references">
+                    <div class="bible-ref">
+                        <strong>Jo 11,1-37</strong>
+                        <span>Ressurreição de Lázaro — Jesus consola Marta e Maria</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Lc 7,11-17</strong>
+                        <span>A Viúva de Naim — Jesus ressuscita o filho da viúva</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Is 61,1-3</strong>
+                        <span>O Espírito do Senhor sobre nós — missão de consolar</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>1Cor 15,12-20</strong>
+                        <span>A crença na ressurreição</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Salmo 23(22)</strong>
+                        <span>O Senhor é meu pastor — vale tenebroso das sombras</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>1Pd 3,15</strong>
+                        <span>"Estai sempre pronto a dar razão da vossa esperança"</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block highlight-block">
+                <h3>Calendário de Formação Sugerido</h3>
+                <p>Ofereça uma formação básica inicial antes da pessoa ir a campo. Depois, aos poucos, à medida que os agentes vão atuando, oferecer mais formação. Faça um <strong>calendário mensal</strong> onde os agentes possam:</p>
+                <ul>
+                    <li>Estudar um tema diferente por mês</li>
+                    <li>Refletir e partilhar situações vividas</li>
+                    <li>Usar o método da <em>lectio divina</em> como oração de abertura</li>
+                    <li>Trocar experiências sobre o exercício pastoral</li>
+                </ul>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo3')">← Módulo 3</button>
+                <button class="btn-complete" onclick="completeModule('modulo4')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo5')">Módulo 5 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 5 -->
+        <section class="module hidden" id="modulo5">
+            <div class="module-header">
+                <span class="module-badge">Módulo 5</span>
+                <h2>Procedimentos Corretos</h2>
+                <p class="module-desc">O que deve ser feito durante o exercício pastoral</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Manual de Conduta do Agente</h3>
+                <p>Os procedimentos dos agentes dependem da sua formação e capacitação. Seguem recomendações essenciais:</p>
+
+                <div class="procedures-grid">
+                    <div class="procedure-card correct">
+                        <h4>📖 Buscar Formação Teórica</h4>
+                        <p>Leia subsídios sobre a pastoral. Busque saber do que se trata e em que campo atua. Seja uma pessoa de leitura e de oração.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>🤝 Buscar Formação Prática</h4>
+                        <p>Acompanhe outras pessoas e o padre a velórios, visitas e missas antes de atuar diretamente.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>👔 Vestir-se Adequadamente</h4>
+                        <p>Roupa apropriada para velórios e visitas. A pastoral deve ter uma veste própria que identifique seus agentes.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>📝 Preparar o que Irá Dizer</h4>
+                        <p>Reflita e reze suas ações com antecedência. Prepare os textos bíblicos. Não fale de improviso.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>📋 Usar Sempre um Roteiro</h4>
+                        <p>Tenha roteiros preparados para visitas e celebrações, mas use de forma natural, sem ser mecânico.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>📖 Escolher Textos Bíblicos</h4>
+                        <p>Use a Bíblia com naturalidade e moderação. Faça a leitura orante e extraia o essencial pelo método da lectio divina.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>⏱️ Ser Breve sem ser Superficial</h4>
+                        <p>Toque no essencial do texto. A visita deve ser boa e confortadora, sem aborrecer quem é visitado.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>🎭 Agir com Naturalidade</h4>
+                        <p>Seja o mais natural possível, sem demonstrar nervosismo ou insegurança. Fale olhando para as pessoas.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>⏰ Chegar Antes da Hora</h4>
+                        <p>Chegue cedo para conhecer o ambiente e se familiarizar. Se precisar atrasar, avise antes.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>🎯 Estar Focado no Tema</h4>
+                        <p>Evite divagações ou desvios. Preste atenção se sua fala não está saindo do assunto.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>🤫 Manter Silêncio Orante</h4>
+                        <p>Que sua presença no velório ou celebração seja silenciosa e de oração, provocando o silêncio nos demais.</p>
+                    </div>
+                    <div class="procedure-card correct">
+                        <h4>🤲 Consultar a Família</h4>
+                        <p>Verifique se a família deseja a presença da Igreja Católica antes de fazer a celebração. Respeite outras denominações presentes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block highlight-block">
+                <h3>Regra de Ouro</h3>
+                <div class="golden-rule">
+                    <p>"O bom-senso é o norteador de comportamentos. Não se esqueça de usá-lo em todos os momentos, especialmente quando estiver agindo na Pastoral da Esperança."</p>
+                </div>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo4')">← Módulo 4</button>
+                <button class="btn-complete" onclick="completeModule('modulo5')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo6')">Módulo 6 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 6 -->
+        <section class="module hidden" id="modulo6">
+            <div class="module-header">
+                <span class="module-badge">Módulo 6</span>
+                <h2>O que Deve ser Evitado</h2>
+                <p class="module-desc">Procedimentos que os agentes não devem ter durante o exercício pastoral</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Procedimentos a Evitar</h3>
+
+                <div class="avoid-list">
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Estar Despreparado</h4>
+                            <p>Ir para a pastoral sem nenhuma noção do que se trata, "esperando pra ver o que acontece". Isso geralmente resulta em algo desagradável.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Vestimenta Inadequada</h4>
+                            <p>Roupas curtas, sujas, amassadas ou com aberturas em demasia. Você representa a Igreja.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Falar em Demasia</h4>
+                            <p>No afã de querer ajudar, falar mais do que deve. Tudo precisa ser dosado e limitado.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Estender a Celebração</h4>
+                            <p>Celebração demorada não significa qualidade. Use de bom-senso com o tempo.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Perguntas Indiscretas</h4>
+                            <p>Evite perguntar sobre a causa da morte, estado civil, idade ou coisas que causem constrangimento.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Falsos Elogios ao Falecido</h4>
+                            <p>Se não conhece a pessoa, evite tecer elogios. Pode não corresponder à realidade e causar mal-estar.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Piadas e Anedotas</h4>
+                            <p>Em ambientes de luto, piadas são profundamente agressivas e desrespeitosas.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Rir Durante a Celebração</h4>
+                            <p>Mesmo que aconteça algo inusitado, contenha o riso. Sua postura deve ser de compaixão.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Descontrolar-se</h4>
+                            <p>Mantenha-se firme emocionalmente. Seu papel é ser ponto de equilíbrio, não se deixe dominar pela emoção.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Tocar no Falecido</h4>
+                            <p>Evite tocar no corpo por questões de higiene. Há outras maneiras de demonstrar carinho.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Fazer Julgamentos</h4>
+                            <p>Não aponte defeitos da pessoa falecida. Não importa quem ela foi — você não está ali para julgar.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Cobrar ou Aceitar Pagamentos</h4>
+                            <p>O trabalho é voluntário e gratuito. Se oferecerem dinheiro, recuse e sugira doação à paróquia.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Agir Mecanicamente</h4>
+                            <p>Não se prenda totalmente ao roteiro — fale com o coração. Os roteiros são guias, não amarras.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon">🚫</div>
+                        <div>
+                            <h4>Fazer Propaganda</h4>
+                            <p>Não faça propaganda de nenhum produto durante o velório (floricultura, gráficas, velas etc.).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo5')">← Módulo 5</button>
+                <button class="btn-complete" onclick="completeModule('modulo6')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo7')">Módulo 7 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 7 -->
+        <section class="module hidden" id="modulo7">
+            <div class="module-header">
+                <span class="module-badge">Módulo 7</span>
+                <h2>A Coordenação da Pastoral</h2>
+                <p class="module-desc">Perfil, qualidades e sugestões para quem coordena a Pastoral da Esperança</p>
+            </div>
+
+            <div class="section-block">
+                <h3>A Importância do Coordenador</h3>
+                <p>O bom êxito de uma pastoral depende, na maior parte, da pessoa do coordenador. Se quem coordena for uma pessoa <strong>dinâmica, esforçada e apaixonada</strong> pelo trabalho, a pastoral se desenvolverá e dará frutos.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Funções do Coordenador</h3>
+                <div class="functions-grid">
+                    <div class="function-item">Convocar reuniões</div>
+                    <div class="function-item">Elaborar plano de ação</div>
+                    <div class="function-item">Acompanhar os agentes</div>
+                    <div class="function-item">Participar do CPP</div>
+                    <div class="function-item">Representar a pastoral na diocese</div>
+                    <div class="function-item">Compor equipes para velórios</div>
+                    <div class="function-item">Ajudar na preparação de missas</div>
+                    <div class="function-item">Informar o pároco das ações</div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>15 Qualidades do Coordenador</h3>
+                <div class="qualities-grid">
+                    <div class="quality">
+                        <span class="quality-num">1</span>
+                        <h4>Saber Ouvir</h4>
+                        <p>Ter os ouvidos bem abertos aos clamores. Quem sabe ouvir transmite esperança.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">2</span>
+                        <h4>Ter a Palavra Certa</h4>
+                        <p>Na hora certa. Uma palavra mal dita pode se transformar numa palavra maldita.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">3</span>
+                        <h4>Dizer com o Coração</h4>
+                        <p>Ser sincero com sensibilidade. A sinceridade deve vir acompanhada de bondade.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">4</span>
+                        <h4>Ter Disponibilidade</h4>
+                        <p>Não medir esforços para atender quando alguém procurar, seja o dia e hora que for.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">5</span>
+                        <h4>Transmitir Confiança</h4>
+                        <p>Ser um ombro amigo, alguém em quem se possa confiar — um bálsamo para a alma.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">6</span>
+                        <h4>Ser Coerente</h4>
+                        <p>Fazer coincidir o que falamos com as nossas atitudes.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">7</span>
+                        <h4>Ter Empenho</h4>
+                        <p>Ser persistente, tomar a dianteira nas ações, não desistir diante das dificuldades.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">8</span>
+                        <h4>Ser o Animador</h4>
+                        <p>Motivar os demais, dar alma e sentido ao trabalho. Agir sem aparecer, mas se faltar, todos sentirão.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">9</span>
+                        <h4>Ser Acessível</h4>
+                        <p>Que todos possam encontrá-lo e dialogar facilmente, sem barreiras.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">10</span>
+                        <h4>Ser Paciente</h4>
+                        <p>Receber opiniões e críticas, reclamações e elogios, com coração compadecido.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">11</span>
+                        <h4>Ser Humilde</h4>
+                        <p>Humildade não é inferioridade, mas simplicidade. Saber seu valor sem se colocar acima dos outros.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">12</span>
+                        <h4>Ser Imparcial</h4>
+                        <p>Não tomar partido. Manter o grupo coeso e dissipar qualquer início de divisão.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">13</span>
+                        <h4>Ter Entusiasmo</h4>
+                        <p>Uma pessoa entusiasmada encanta e anima outros. Mesmo nas dificuldades, sabe enxergar algo de bom.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">14</span>
+                        <h4>Cultivar Bom Humor</h4>
+                        <p>Transmitir alegria, rir com as pessoas e não das pessoas. Não há lugar para cara fechada na pastoral.</p>
+                    </div>
+                    <div class="quality">
+                        <span class="quality-num">15</span>
+                        <h4>Coordenar com Autoridade</h4>
+                        <p>Sem ser autoritário. E tudo caminhará bem.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo6')">← Módulo 6</button>
+                <button class="btn-complete" onclick="completeModule('modulo7')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo8')">Módulo 8 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 8 -->
+        <section class="module hidden" id="modulo8">
+            <div class="module-header">
+                <span class="module-badge">Módulo 8</span>
+                <h2>A Celebração da Esperança (Exéquias)</h2>
+                <p class="module-desc">Como preparar e conduzir celebrações nos velórios</p>
+            </div>
+
+            <div class="section-block">
+                <h3>A Celebração como Evangelização</h3>
+                <p>Estes momentos são oportunos para a evangelização. Uma palavra bem dita se tornará numa <strong>palavra bendita</strong>, no sentido de ser bênção para a vida daquela família.</p>
+                <p>Prepare bem e com antecedência a celebração. Lembre-se: <strong>cada momento é único</strong>.</p>
+            </div>
+
+            <div class="section-block">
+                <h3>Os Quatro Ritos da Celebração</h3>
+
+                <div class="rites-container">
+                    <div class="rite">
+                        <div class="rite-header">
+                            <span class="rite-number">I</span>
+                            <h4>Ritos Iniciais — Acolhida</h4>
+                        </div>
+                        <div class="rite-body">
+                            <ol>
+                                <li><strong>Apresente-se</strong> como membro da Pastoral da Esperança, serviço da Igreja Católica</li>
+                                <li><strong>Promova ambiente de oração</strong> — convide os presentes a se aproximarem</li>
+                                <li>Recite alguns <strong>mantras ou música instrumental</strong> para ambientar</li>
+                                <li><strong>Acolha os familiares</strong> pelo nome (informe-se antes sobre o nome do falecido)</li>
+                                <li>Faça uma <strong>exortação espontânea</strong> sobre o sentido da vida e da passagem</li>
+                                <li>Motive um <strong>canto apropriado</strong> (com violão se possível)</li>
+                                <li>Inicie com o <strong>Sinal da Cruz</strong></li>
+                                <li>Motive o <strong>Pedido de Perdão</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="rite">
+                        <div class="rite-header">
+                            <span class="rite-number">II</span>
+                            <h4>Rito da Palavra</h4>
+                        </div>
+                        <div class="rite-body">
+                            <ol>
+                                <li>Faça uma <strong>breve introdução</strong> antes das leituras</li>
+                                <li>Entoe um <strong>canto meditativo</strong> antes da primeira leitura</li>
+                                <li>Peça que alguém da família faça a <strong>primeira leitura</strong></li>
+                                <li>Recite o <strong>Salmo 23</strong> (responsorial)</li>
+                                <li>Canto de <strong>Aclamação ao Evangelho</strong></li>
+                                <li>Proclame o <strong>Evangelho</strong></li>
+                                <li>Faça uma <strong>reflexão</strong> (cerca de 10 minutos) — ligando a Palavra à situação</li>
+                                <li>Motive as <strong>Preces da Assembleia</strong> (espontâneas e preparadas)</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="rite">
+                        <div class="rite-header">
+                            <span class="rite-number">III</span>
+                            <h4>Rito de Encomendação</h4>
+                        </div>
+                        <div class="rite-body">
+                            <ol>
+                                <li>Faça uma <strong>breve explicação</strong> do significado da encomendação</li>
+                                <li>Peça que os presentes <strong>estendam a mão</strong> em direção ao caixão e rezem juntos</li>
+                                <li>Faça a <strong>aspersão com água-benta</strong></li>
+                                <li>Reze o <strong>Pai-nosso e Ave-Maria</strong></li>
+                                <li>Conclua com <strong>oração apropriada</strong></li>
+                                <li>Repita 3 vezes: <em>"Dai-lhe, Senhor, o descanso eterno. E que a luz perpétua o ilumine."</em></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="rite">
+                        <div class="rite-header">
+                            <span class="rite-number">IV</span>
+                            <h4>Rito Final</h4>
+                        </div>
+                        <div class="rite-body">
+                            <ol>
+                                <li>Faça uma <strong>breve reflexão</strong> de encerramento</li>
+                                <li>Entoe um <strong>canto apropriado</strong></li>
+                                <li>Convide para a <strong>Bênção Final</strong> (com mãos estendidas)</li>
+                                <li>Motive o <strong>Abraço da Paz</strong></li>
+                                <li><strong>Convide para o sepultamento</strong></li>
+                                <li><strong>Agende a missa de 7º dia</strong> com a família</li>
+                                <li>Encerre com <strong>canto</strong> e acompanhe a família</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo7')">← Módulo 7</button>
+                <button class="btn-complete" onclick="completeModule('modulo8')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo9')">Módulo 9 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 9 -->
+        <section class="module hidden" id="modulo9">
+            <div class="module-header">
+                <span class="module-badge">Módulo 9</span>
+                <h2>A Missa de 7º Dia</h2>
+                <p class="module-desc">Significado, preparação e celebração</p>
+            </div>
+
+            <div class="section-block">
+                <h3>O Significado da Missa de 7º Dia</h3>
+                <p>A palavra <strong>"missa"</strong>, em latim, significa <strong>despedida</strong>. A família se reúne mais uma vez para se despedir de seu ente querido — uma despedida definitiva, de descanso eterno.</p>
+
+                <div class="concept-box">
+                    <h4>💡 O Simbolismo do Número 7</h4>
+                    <p>Na Bíblia, o número sete significa <strong>plenitude, perfeição e completude</strong>. Deus levou sete dias para criar o mundo e, no sétimo dia, descansou. Da mesma forma, a missa de 7º dia simboliza que aquela pessoa, após cumprir sua missão nesta terra, pode também descansar.</p>
+                    <p>A referência aparece 662 vezes na Bíblia e está presente nos rituais fúnebres desde o Antigo Testamento: José guardou luto por seu pai durante sete dias (Gn 50,10), e "o luto pelo morto dura sete dias" (Eclo 22,11).</p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Três Funções da Missa de 7º Dia</h3>
+                <div class="cards-grid three-cols">
+                    <div class="function-card">
+                        <h4>🕊️ Cerimônia de Despedida</h4>
+                        <p>A família se reúne pela última vez para fazer a entrega definitiva nas mãos de Deus.</p>
+                    </div>
+                    <div class="function-card">
+                        <h4>💭 Fazer Memória</h4>
+                        <p>Assim como na Eucaristia fazemos memória de Jesus, na missa de 7º dia fazemos memória do ente querido, trazendo-o de volta à nossa lembrança.</p>
+                    </div>
+                    <div class="function-card">
+                        <h4>🤝 Solidariedade Social</h4>
+                        <p>Momento forte de reunião de parentes e amigos que não puderam comparecer ao enterro, demonstrando solidariedade.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>As Outras Missas</h3>
+                <div class="bible-references">
+                    <div class="bible-ref">
+                        <strong>Missa de 3º dia</strong>
+                        <span>Relação com a ressurreição de Cristo ao terceiro dia (costume antigo)</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Missa de 7º dia</strong>
+                        <span>Deus criou o mundo em 6 dias e no 7º descansou — descanso eterno</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Missa de 30º dia</strong>
+                        <span>Referência ao mês de luto que Israel guardou por Moisés (Dt 34,8)</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Missa de 1 ano</strong>
+                        <span>Aniversário da "páscoa" — a passagem para a vida eterna</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Sugestões para Preparação</h3>
+                <h4>Leituras Sugeridas</h4>
+                <ul>
+                    <li><strong>Primeira leitura:</strong> Jó 19,1.23-27</li>
+                    <li><strong>Salmo responsorial:</strong> 27(26)</li>
+                    <li><strong>Segunda leitura:</strong> Rm 5,5-11</li>
+                    <li><strong>Evangelho:</strong> Jo 6,37-40</li>
+                    <li>Ou Gn 1,26-31; 2,1-3 (conclusão da criação)</li>
+                </ul>
+
+                <h4>Elementos Litúrgicos Especiais</h4>
+                <ul>
+                    <li>Valorizar o símbolo da <strong>luz</strong> (velas acesas) durante o Salmo e Evangelho</li>
+                    <li>Queimar <strong>ervas aromáticas/incenso</strong> junto à cruz durante as preces</li>
+                    <li>Oferecer <strong>objetos que pertenciam ao falecido</strong> no ofertório</li>
+                    <li>Fazer <strong>silêncio</strong> na lembrança dos mortos e dizer o nome com ênfase</li>
+                    <li>Após a comunhão: <strong>música instrumental</strong> (flauta) e deposição de flores</li>
+                </ul>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo8')">← Módulo 8</button>
+                <button class="btn-complete" onclick="completeModule('modulo9')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('modulo10')">Módulo 10 →</button>
+            </div>
+        </section>
+
+        <!-- MÓDULO 10 -->
+        <section class="module hidden" id="modulo10">
+            <div class="module-header">
+                <span class="module-badge">Módulo 10</span>
+                <h2>O Luto e o Dia de Finados</h2>
+                <p class="module-desc">Significados antropológicos do luto e reflexões sobre a morte</p>
+            </div>
+
+            <div class="section-block">
+                <h3>O que é o Luto</h3>
+                <p>Luto significa um período de <strong>intenso sentimento de tristeza</strong> por motivo da morte de alguém. A missa de 7º dia marca o fim da obrigação do luto, embora o sentimento pela perda possa levar meses ou anos para ser assimilado.</p>
+
+                <div class="concept-box">
+                    <h4>💡 O Paradoxo do Luto</h4>
+                    <p>O luto é paradoxal: ao mesmo tempo em que se <strong>chora a morte</strong>, busca-se o consolo na sua própria <strong>negação</strong>. A crença na ressurreição neutraliza os significados reais da morte. O indivíduo tem consciência da perda real, mas a religião o faz crer no contrário — a morte como <strong>passagem</strong>.</p>
+                    <p>Como afirma Durkheim: <em>"Saem do luto, e saem dele graças a ele mesmo."</em></p>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Temas Importantes para os Agentes</h3>
+
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>⛪ A Unção dos Enfermos</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A Unção dos Enfermos <strong>não é um sacramento da morte</strong>, mas uma presença sacramental que entrega os enfermos aos cuidados de Deus. Ninguém deve ter medo de recebê-lo.</p>
+                            <p>Os agentes devem ajudar as pessoas a entender o real significado deste sacramento e orientá-las a recebê-lo sem medo. A Unção fortalece e consola.</p>
+                            <div class="bible-verse">
+                                <p>"Pela sagrada Unção dos Enfermos e pela oração dos presbíteros, a Igreja toda entrega os doentes aos cuidados do Senhor sofredor e glorificado, para que os alivie e salve."</p>
+                                <cite>— Catecismo da Igreja Católica, n. 1499</cite>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🙏 Rezar pelos Mortos</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A Igreja aprova e incentiva a oração pelos mortos: <em>"A união daqueles que estão a caminho, com os irmãos falecidos, de maneira alguma se interrompe; antes, vê-se fortalecida pela comunhão dos bens espirituais"</em> (cf. LG 49).</p>
+                            <p>Quem reza pelos mortos está demonstrando <strong>amor</strong> e dando provas da sua <strong>esperança na eternidade</strong>. Professamos no Credo: "Cremos na comunhão dos santos, na remissão dos pecados, na ressurreição da carne e na vida eterna."</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🔥 A Cremação</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>A Igreja incentiva o sepultamento, mas <strong>não proíbe a cremação</strong>, desde que não manifeste posição contrária à fé na ressurreição.</p>
+                            <ul>
+                                <li><strong>Catecismo:</strong> "A Igreja permite a cremação, se esta não manifestar uma posição contrária à fé na ressurreição dos corpos" (n. 2301)</li>
+                                <li><strong>Código de Direito Canônico:</strong> "A Igreja recomenda insistentemente que se conserve o costume de sepultar os corpos dos defuntos; mas não proíbe a cremação" (Cân. 1176, §3)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span>🌺 O Dia de Finados</span>
+                            <span class="accordion-icon">+</span>
+                        </button>
+                        <div class="accordion-body">
+                            <p>O dia 2 de novembro é o dia oficial de rezar pelos mortos. Milhares de pessoas vão aos cemitérios para rezar, levar flores e sintonizar com o ente querido.</p>
+                            <p>É uma oportunidade para refletir sobre:</p>
+                            <ul>
+                                <li>Como lidamos com a morte e seus rituais?</li>
+                                <li>Como concebemos o Sacramento da Unção?</li>
+                                <li>Por que rezamos pelos mortos?</li>
+                                <li>Como ajudar outros a lidar com a morte?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block highlight-block">
+                <h3>Mensagem do Papa Francisco</h3>
+                <blockquote class="papa-quote">
+                    "Se vivemos unidos a Jesus, fiéis a Ele, seremos capazes de enfrentar com esperança e serenidade também a passagem da morte."
+                    <cite>— Papa Francisco, Audiência Geral, 27/11/2013</cite>
+                </blockquote>
+                <blockquote class="papa-quote">
+                    "Não podemos ficar encerrados na paróquia, nas nossas comunidades, quando há tanta gente esperando o Evangelho!"
+                    <cite>— Papa Francisco, Jornada Mundial da Juventude</cite>
+                </blockquote>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo9')">← Módulo 9</button>
+                <button class="btn-complete" onclick="completeModule('modulo10')">✓ Concluir Módulo</button>
+                <button class="btn-primary" onclick="navigateTo('quiz')">Avaliação Final →</button>
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section class="module hidden" id="quiz">
+            <div class="module-header">
+                <span class="module-badge">Avaliação Final</span>
+                <h2>Teste seus Conhecimentos</h2>
+                <p class="module-desc">Responda às questões abaixo para avaliar sua compreensão do treinamento</p>
+            </div>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Quiz será gerado via JavaScript -->
+            </div>
+
+            <div class="quiz-results hidden" id="quizResults">
+                <div class="results-card">
+                    <h3>Resultado da Avaliação</h3>
+                    <div class="score-circle" id="scoreCircle">
+                        <span class="score-number" id="scoreNumber">0</span>
+                        <span class="score-label">de 15</span>
+                    </div>
+                    <p class="score-message" id="scoreMessage"></p>
+                    <div class="results-actions">
+                        <button class="btn-secondary" onclick="restartQuiz()">Refazer Avaliação</button>
+                        <button class="btn-primary" onclick="navigateTo('home')">Voltar ao Início</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-nav">
+                <button class="btn-secondary" onclick="navigateTo('modulo10')">← Módulo 10</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>Pastoral da Esperança — Material de formação baseado no livro de José Carlos Pereira (Editora Vozes, 2015)</p>
+        <p>Desenvolvido para a formação de voluntários</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
