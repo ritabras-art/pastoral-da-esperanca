@@ -602,7 +602,9 @@ function initAudioPlayers() {
         if (audioPlayers[audioId]) return; // already initialized
 
         var audio = new Audio();
-        audio.preload = 'metadata';
+        audio.preload = 'none';
+        audio.setAttribute('playsinline', '');
+        audio.setAttribute('webkit-playsinline', '');
         audio.src = audioSrc;
 
         var playBtn = container.querySelector('.audio-play-btn');
@@ -620,6 +622,26 @@ function initAudioPlayers() {
             return m + ':' + (sec < 10 ? '0' : '') + sec;
         }
 
+        // Loading state
+        var isLoading = false;
+
+        audio.addEventListener('waiting', function() {
+            isLoading = true;
+            playBtn.textContent = '⏳';
+        });
+
+        audio.addEventListener('playing', function() {
+            isLoading = false;
+            playBtn.textContent = '⏸';
+        });
+
+        audio.addEventListener('canplay', function() {
+            if (isLoading) {
+                isLoading = false;
+                playBtn.textContent = audio.paused ? '▶' : '⏸';
+            }
+        });
+
         // Play/Pause
         playBtn.addEventListener('click', function() {
             // Pause other players
@@ -631,8 +653,16 @@ function initAudioPlayers() {
             });
 
             if (audio.paused) {
-                audio.play();
-                playBtn.textContent = '⏸';
+                playBtn.textContent = '⏳';
+                var playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(function() {
+                        playBtn.textContent = '⏸';
+                    }).catch(function(err) {
+                        playBtn.textContent = '▶';
+                        console.log('Playback error:', err);
+                    });
+                }
             } else {
                 audio.pause();
                 playBtn.textContent = '▶';
@@ -641,22 +671,35 @@ function initAudioPlayers() {
 
         // Time update
         audio.addEventListener('timeupdate', function() {
-            if (audio.duration) {
+            if (audio.duration && !isNaN(audio.duration)) {
                 var pct = (audio.currentTime / audio.duration) * 100;
                 progressFill.style.width = pct + '%';
                 timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
             }
         });
 
-        // Click on progress bar to seek
-        progressBar.addEventListener('click', function(e) {
-            if (audio.duration) {
-                var rect = progressBar.getBoundingClientRect();
-                var x = e.clientX - rect.left;
-                var pct = x / rect.width;
-                audio.currentTime = pct * audio.duration;
+        // Show duration when metadata loads
+        audio.addEventListener('loadedmetadata', function() {
+            if (audio.duration && !isNaN(audio.duration)) {
+                timeDisplay.textContent = '0:00 / ' + formatTime(audio.duration);
             }
         });
+
+        // Click/touch on progress bar to seek
+        function handleSeek(e) {
+            if (audio.duration && !isNaN(audio.duration)) {
+                var rect = progressBar.getBoundingClientRect();
+                var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                var x = clientX - rect.left;
+                var pct = Math.max(0, Math.min(1, x / rect.width));
+                audio.currentTime = pct * audio.duration;
+            }
+        }
+        progressBar.addEventListener('click', handleSeek);
+        progressBar.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            handleSeek(e);
+        }, { passive: false });
 
         // Speed buttons
         speedBtns.forEach(function(btn) {
