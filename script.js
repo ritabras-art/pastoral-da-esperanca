@@ -215,29 +215,60 @@ function navigateTo(moduleId) {
 
         // Init audio players in this module
         setTimeout(initAudioPlayers, 100);
+        updateToggleButtons();
     }
 }
 
-async function completeModule(moduleId) {
-    if (!state.completedModules.includes(moduleId)) {
-        state.completedModules.push(moduleId);
+async function toggleModule(moduleId) {
+    var idx = state.completedModules.indexOf(moduleId);
 
-        // Save to Supabase
-        if (state.user) {
+    if (idx === -1) {
+        // Marcar como concluído
+        state.completedModules.push(moduleId);
+        if (state.user && db) {
             await db.from('module_progress').upsert({
                 user_id: state.user.id,
                 module_id: moduleId
             }, { onConflict: 'user_id,module_id' });
         }
-    }
-    updateProgress();
+        updateProgress();
+        updateToggleButtons();
 
-    const idx = modules.indexOf(moduleId);
-    if (idx < modules.length - 1) {
-        navigateTo(modules[idx + 1]);
+        // Navegar para o próximo
+        var modIdx = modules.indexOf(moduleId);
+        if (modIdx < modules.length - 1) {
+            navigateTo(modules[modIdx + 1]);
+        } else {
+            navigateTo('quiz');
+        }
     } else {
-        navigateTo('quiz');
+        // Desmarcar
+        state.completedModules.splice(idx, 1);
+        if (state.user && db) {
+            await db.from('module_progress')
+                .delete()
+                .eq('user_id', state.user.id)
+                .eq('module_id', moduleId);
+        }
+        updateProgress();
+        updateToggleButtons();
     }
+}
+
+function updateToggleButtons() {
+    modules.forEach(function(mod) {
+        var btn = document.getElementById('toggleBtn-' + mod);
+        if (!btn) return;
+        if (state.completedModules.includes(mod)) {
+            btn.textContent = '↩ Desmarcar Módulo';
+            btn.classList.remove('btn-complete');
+            btn.classList.add('btn-uncomplete');
+        } else {
+            btn.textContent = '✓ Concluir Módulo';
+            btn.classList.remove('btn-uncomplete');
+            btn.classList.add('btn-complete');
+        }
+    });
 }
 
 function updateProgress() {

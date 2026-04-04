@@ -935,6 +935,23 @@ li {
     background: #2d7048;
 }
 
+.btn-uncomplete {
+    background: var(--text-muted);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.btn-uncomplete:hover {
+    background: var(--danger);
+}
+
 /* ===== MODULE NAV ===== */
 .module-nav {
     display: flex;
