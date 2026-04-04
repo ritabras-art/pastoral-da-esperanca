@@ -8,7 +8,7 @@ try {
 } catch (e) {
     console.error('Erro ao conectar com Supabase:', e);
 }
-const supabase = sb;
+var db = sb;
 
 // ===== STATE =====
 const state = {
@@ -56,7 +56,7 @@ async function handleLogin(e) {
     var password = document.getElementById('loginPassword').value;
     var btn = document.getElementById('loginBtn');
 
-    if (!supabase) {
+    if (!db) {
         showAuthError('loginError', 'Erro de conexao com o servidor. Recarregue a pagina.');
         return;
     }
@@ -65,7 +65,7 @@ async function handleLogin(e) {
     btn.textContent = 'Entrando...';
 
     try {
-        var result = await supabase.auth.signInWithPassword({ email: email, password: password });
+        var result = await db.auth.signInWithPassword({ email: email, password: password });
 
         btn.disabled = false;
         btn.textContent = 'Entrar';
@@ -101,7 +101,7 @@ async function handleRegister(e) {
         return;
     }
 
-    if (!supabase) {
+    if (!db) {
         showAuthError('registerError', 'Erro de conexao com o servidor. Recarregue a pagina.');
         return;
     }
@@ -110,7 +110,7 @@ async function handleRegister(e) {
     btn.textContent = 'Criando conta...';
 
     try {
-        var result = await supabase.auth.signUp({
+        var result = await db.auth.signUp({
             email: email,
             password: password,
             options: {
@@ -130,7 +130,7 @@ async function handleRegister(e) {
 
         // Update parish if provided
         if (parish && result.data && result.data.user) {
-            await supabase.from('profiles').update({ parish: parish, full_name: name }).eq('id', result.data.user.id);
+            await db.from('profiles').update({ parish: parish, full_name: name }).eq('id', result.data.user.id);
         }
 
         // Check if email confirmation is required
@@ -149,7 +149,7 @@ async function handleRegister(e) {
 }
 
 async function handleLogout() {
-    await supabase.auth.signOut();
+    await db.auth.signOut();
     state.user = null;
     state.completedModules = [];
     showAuthScreen();
@@ -175,13 +175,13 @@ async function enterApp(user) {
     state.user = user;
 
     // Get profile
-    const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+    const { data: profile } = await db.from('profiles').select('*').eq('id', user.id).single();
 
     const displayName = profile?.full_name || user.user_metadata?.full_name || user.email;
     document.getElementById('userName').textContent = displayName;
 
     // Load progress from Supabase
-    const { data: progress } = await supabase.from('module_progress').select('module_id').eq('user_id', user.id);
+    const { data: progress } = await db.from('module_progress').select('module_id').eq('user_id', user.id);
 
     state.completedModules = progress ? progress.map(p => p.module_id) : [];
 
@@ -221,7 +221,7 @@ async function completeModule(moduleId) {
 
         // Save to Supabase
         if (state.user) {
-            await supabase.from('module_progress').upsert({
+            await db.from('module_progress').upsert({
                 user_id: state.user.id,
                 module_id: moduleId
             }, { onConflict: 'user_id,module_id' });
@@ -302,9 +302,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Check existing session
-    if (supabase) {
+    if (db) {
         try {
-            const { data: { session } } = await supabase.auth.getSession();
+            var sessionResult = await db.auth.getSession();
+            var session = sessionResult.data.session;
             if (session) {
                 await enterApp(session.user);
             } else {
@@ -548,7 +549,7 @@ async function submitQuiz() {
 
     // Save to Supabase
     if (state.user) {
-        await supabase.from('quiz_results').insert({
+        await db.from('quiz_results').insert({
             user_id: state.user.id,
             score: score,
             total: total,
