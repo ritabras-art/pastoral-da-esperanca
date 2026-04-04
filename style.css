@@ -1327,6 +1327,30 @@ li {
     margin-bottom: 0.8rem;
 }
 
+/* ===== AUTH TOGGLE (CSS-only) ===== */
+.auth-toggle-input {
+    display: none;
+}
+
+.auth-register {
+    display: none;
+}
+
+.auth-toggle-input:checked ~ .auth-login {
+    display: none;
+}
+
+.auth-toggle-input:checked ~ .auth-register {
+    display: block;
+}
+
+.auth-link {
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 /* ===== HEADER RIGHT ===== */
 .header-right {
     display: flex;

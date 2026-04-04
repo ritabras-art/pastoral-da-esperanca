@@ -37,7 +37,7 @@ function showRegister(e) {
 
 function clearAuthErrors() {
     document.querySelectorAll('.auth-error, .auth-success').forEach(el => {
-        el.classList.add('hidden');
+        el.style.display = 'none';
         el.textContent = '';
     });
 }
@@ -45,7 +45,7 @@ function clearAuthErrors() {
 function showAuthError(formId, message) {
     const el = document.getElementById(formId);
     el.textContent = message;
-    el.classList.remove('hidden');
+    el.style.display = 'block';
 }
 
 async function handleLogin(e) {
@@ -120,7 +120,7 @@ async function handleRegister(e) {
     if (data.user && !data.session) {
         const el = document.getElementById('registerSuccess');
         el.textContent = 'Conta criada! Verifique seu e-mail para confirmar o cadastro.';
-        el.classList.remove('hidden');
+        el.style.display = 'block';
     } else if (data.session) {
         await enterApp(data.user);
     }
@@ -278,27 +278,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!isOpen) item.classList.add('open');
         });
     });
-
-    // Auth toggle links
-    var goToRegister = document.getElementById('goToRegister');
-    if (goToRegister) {
-        goToRegister.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('registerForm').classList.remove('hidden');
-            clearAuthErrors();
-        });
-    }
-
-    var goToLogin = document.getElementById('goToLogin');
-    if (goToLogin) {
-        goToLogin.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('registerForm').classList.add('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-            clearAuthErrors();
-        });
-    }
 
     // Check existing session
     if (supabase) {

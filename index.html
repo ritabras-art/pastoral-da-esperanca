@@ -19,8 +19,11 @@
                 <p>Treinamento de Voluntários</p>
             </div>
 
+            <!-- CSS-only toggle -->
+            <input type="checkbox" id="authToggle" class="auth-toggle-input">
+
             <!-- Login Form -->
-            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+            <form class="auth-form auth-login" id="loginForm" onsubmit="handleLogin(event)">
                 <h2>Entrar</h2>
                 <div class="form-group">
                     <label for="loginEmail">E-mail</label>
@@ -30,13 +33,13 @@
                     <label for="loginPassword">Senha</label>
                     <input type="password" id="loginPassword" required placeholder="Sua senha" minlength="6">
                 </div>
-                <div class="auth-error hidden" id="loginError"></div>
+                <div class="auth-error" id="loginError" style="display:none"></div>
                 <button type="submit" class="btn-primary btn-full" id="loginBtn">Entrar</button>
-                <p class="auth-switch">Ainda não tem conta? <a href="#" id="goToRegister">Cadastre-se</a></p>
+                <p class="auth-switch">Ainda não tem conta? <label for="authToggle" class="auth-link">Cadastre-se</label></p>
             </form>
 
             <!-- Register Form -->
-            <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+            <form class="auth-form auth-register" id="registerForm" onsubmit="handleRegister(event)">
                 <h2>Cadastro</h2>
                 <div class="form-group">
                     <label for="regName">Nome Completo</label>
@@ -54,24 +57,12 @@
                     <label for="regPassword">Senha</label>
                     <input type="password" id="regPassword" required placeholder="Mínimo 6 caracteres" minlength="6">
                 </div>
-                <div class="auth-error hidden" id="registerError"></div>
-                <div class="auth-success hidden" id="registerSuccess"></div>
+                <div class="auth-error" id="registerError" style="display:none"></div>
+                <div class="auth-success" id="registerSuccess" style="display:none"></div>
                 <button type="submit" class="btn-primary btn-full" id="regBtn">Criar Conta</button>
-                <p class="auth-switch">Já tem conta? <a href="#" id="goToLogin">Entrar</a></p>
+                <p class="auth-switch">Já tem conta? <label for="authToggle" class="auth-link">Entrar</label></p>
             </form>
         </div>
-        <script>
-            document.getElementById('goToRegister').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'block';
-            });
-            document.getElementById('goToLogin').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('registerForm').style.display = 'none';
-                document.getElementById('loginForm').style.display = 'block';
-            });
-        </script>
     </div>
 
     <!-- Header -->
