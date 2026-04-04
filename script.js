@@ -52,77 +52,99 @@ async function handleLogin(e) {
     e.preventDefault();
     clearAuthErrors();
 
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
-    const btn = document.getElementById('loginBtn');
+    var email = document.getElementById('loginEmail').value.trim();
+    var password = document.getElementById('loginPassword').value;
+    var btn = document.getElementById('loginBtn');
+
+    if (!supabase) {
+        showAuthError('loginError', 'Erro de conexao com o servidor. Recarregue a pagina.');
+        return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'Entrando...';
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    try {
+        var result = await supabase.auth.signInWithPassword({ email: email, password: password });
 
-    btn.disabled = false;
-    btn.textContent = 'Entrar';
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
 
-    if (error) {
-        let msg = 'Erro ao entrar. Verifique e-mail e senha.';
-        if (error.message.includes('Invalid login')) msg = 'E-mail ou senha incorretos.';
-        if (error.message.includes('Email not confirmed')) msg = 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.';
-        showAuthError('loginError', msg);
-        return;
+        if (result.error) {
+            var msg = 'Erro ao entrar: ' + result.error.message;
+            if (result.error.message.includes('Invalid login')) msg = 'E-mail ou senha incorretos.';
+            if (result.error.message.includes('Email not confirmed')) msg = 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.';
+            showAuthError('loginError', msg);
+            return;
+        }
+
+        await enterApp(result.data.user);
+    } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
+        showAuthError('loginError', 'Erro inesperado: ' + err.message);
     }
-
-    await enterApp(data.user);
 }
 
 async function handleRegister(e) {
     e.preventDefault();
     clearAuthErrors();
 
-    const name = document.getElementById('regName').value.trim();
-    const parish = document.getElementById('regParish').value.trim();
-    const email = document.getElementById('regEmail').value.trim();
-    const password = document.getElementById('regPassword').value;
-    const btn = document.getElementById('regBtn');
+    var name = document.getElementById('regName').value.trim();
+    var parish = document.getElementById('regParish').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var password = document.getElementById('regPassword').value;
+    var btn = document.getElementById('regBtn');
 
     if (name.length < 3) {
         showAuthError('registerError', 'Digite seu nome completo.');
         return;
     }
 
-    btn.disabled = true;
-    btn.textContent = 'Criando conta...';
-
-    const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-            data: { full_name: name, parish: parish }
-        }
-    });
-
-    btn.disabled = false;
-    btn.textContent = 'Criar Conta';
-
-    if (error) {
-        let msg = 'Erro ao criar conta. Tente novamente.';
-        if (error.message.includes('already registered')) msg = 'Este e-mail ja esta cadastrado. Tente fazer login.';
-        showAuthError('registerError', msg);
+    if (!supabase) {
+        showAuthError('registerError', 'Erro de conexao com o servidor. Recarregue a pagina.');
         return;
     }
 
-    // Update parish if provided
-    if (parish && data.user) {
-        await supabase.from('profiles').update({ parish, full_name: name }).eq('id', data.user.id);
-    }
+    btn.disabled = true;
+    btn.textContent = 'Criando conta...';
 
-    // Check if email confirmation is required
-    if (data.user && !data.session) {
-        const el = document.getElementById('registerSuccess');
-        el.textContent = 'Conta criada! Verifique seu e-mail para confirmar o cadastro.';
-        el.style.display = 'block';
-    } else if (data.session) {
-        await enterApp(data.user);
+    try {
+        var result = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: { full_name: name, parish: parish }
+            }
+        });
+
+        btn.disabled = false;
+        btn.textContent = 'Criar Conta';
+
+        if (result.error) {
+            var msg = 'Erro ao criar conta: ' + result.error.message;
+            if (result.error.message.includes('already registered')) msg = 'Este e-mail ja esta cadastrado. Tente fazer login.';
+            showAuthError('registerError', msg);
+            return;
+        }
+
+        // Update parish if provided
+        if (parish && result.data && result.data.user) {
+            await supabase.from('profiles').update({ parish: parish, full_name: name }).eq('id', result.data.user.id);
+        }
+
+        // Check if email confirmation is required
+        if (result.data && result.data.user && !result.data.session) {
+            var el = document.getElementById('registerSuccess');
+            el.textContent = 'Conta criada com sucesso! Verifique seu e-mail para confirmar o cadastro.';
+            el.style.display = 'block';
+        } else if (result.data && result.data.session) {
+            await enterApp(result.data.user);
+        }
+    } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Criar Conta';
+        showAuthError('registerError', 'Erro inesperado: ' + err.message);
     }
 }
 
