@@ -18,7 +18,7 @@ const state = {
     user: null
 };
 
-const modules = ['modulo1','modulo2','modulo3','modulo4','modulo5','modulo6','modulo7','modulo8','modulo9','modulo10'];
+const modules = ['modulo1','modulo2','modulo3','modulo4','modulo5','modulo6','modulo7','modulo8','modulo9'];
 
 // ===== AUTH =====
 function showLogin(e) {
