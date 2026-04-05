@@ -1,7 +1,6 @@
 // ===== STATE =====
 var state = {
-    currentModule: 'home',
-    completedModules: JSON.parse(localStorage.getItem('pe_completed') || '[]')
+    currentModule: 'home'
 };
 
 var modules = ['modulo1','modulo2','modulo3','modulo4','modulo5','modulo6','modulo7','modulo8','modulo9','modulo10'];
@@ -25,67 +24,7 @@ function navigateTo(moduleId) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         closeSidebar();
         setTimeout(initAudioPlayers, 100);
-        updateToggleButtons();
     }
-}
-
-function toggleModule(moduleId) {
-    var idx = state.completedModules.indexOf(moduleId);
-
-    if (idx === -1) {
-        state.completedModules.push(moduleId);
-        localStorage.setItem('pe_completed', JSON.stringify(state.completedModules));
-        updateProgress();
-        updateToggleButtons();
-
-        var modIdx = modules.indexOf(moduleId);
-        if (modIdx < modules.length - 1) {
-            navigateTo(modules[modIdx + 1]);
-        } else {
-            navigateTo('quiz');
-        }
-    } else {
-        state.completedModules.splice(idx, 1);
-        localStorage.setItem('pe_completed', JSON.stringify(state.completedModules));
-        updateProgress();
-        updateToggleButtons();
-    }
-}
-
-function updateToggleButtons() {
-    modules.forEach(function(mod) {
-        var btn = document.getElementById('toggleBtn-' + mod);
-        if (!btn) return;
-        if (state.completedModules.includes(mod)) {
-            btn.textContent = '↩ Desmarcar Módulo';
-            btn.classList.remove('btn-complete');
-            btn.classList.add('btn-uncomplete');
-        } else {
-            btn.textContent = '✓ Concluir Módulo';
-            btn.classList.remove('btn-uncomplete');
-            btn.classList.add('btn-complete');
-        }
-    });
-}
-
-function updateProgress() {
-    var total = modules.length;
-    var completed = state.completedModules.length;
-    var pct = Math.round((completed / total) * 100);
-
-    var fill = document.getElementById('globalProgress');
-    var text = document.getElementById('progressText');
-    if (fill) fill.style.width = pct + '%';
-    if (text) text.textContent = pct + '% concluido (' + completed + '/' + total + ')';
-
-    document.querySelectorAll('.nav-link').forEach(function(link) {
-        var mod = link.dataset.module;
-        if (state.completedModules.includes(mod)) {
-            link.classList.add('completed');
-        } else {
-            link.classList.remove('completed');
-        }
-    });
 }
 
 // ===== SIDEBAR =====
@@ -133,8 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Init
-    updateProgress();
-    updateToggleButtons();
     initAudioPlayers();
 });
 

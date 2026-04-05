@@ -199,41 +199,6 @@ li {
     transition: transform var(--transition);
 }
 
-.nav-header {
-    padding: 1.2rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg-cream);
-}
-
-.nav-header h3 {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.8rem;
-}
-
-.progress-bar {
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-bottom: 0.4rem;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--success), #5cb85c);
-    border-radius: 3px;
-    width: 0%;
-    transition: width 0.5s ease;
-}
-
-.progress-text {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
 .nav-list {
     list-style: none;
     padding: 0.5rem 0;
@@ -260,17 +225,6 @@ li {
     color: var(--primary);
     border-left-color: var(--primary);
     font-weight: 600;
-}
-
-.nav-link.completed {
-    color: var(--success);
-}
-
-.nav-link.completed::after {
-    content: '✓';
-    margin-left: auto;
-    font-weight: 700;
-    color: var(--success);
 }
 
 .nav-icon {
@@ -958,7 +912,7 @@ li {
 }
 
 /* ===== BUTTONS ===== */
-.btn-primary, .btn-secondary, .btn-complete {
+.btn-primary, .btn-secondary {
     padding: 0.7rem 1.5rem;
     border: none;
     border-radius: var(--radius-sm);
@@ -987,32 +941,6 @@ li {
 
 .btn-secondary:hover {
     background: var(--border);
-}
-
-.btn-complete {
-    background: var(--success);
-    color: white;
-}
-
-.btn-complete:hover {
-    background: #2d7048;
-}
-
-.btn-uncomplete {
-    background: var(--text-muted);
-    color: white;
-    padding: 0.7rem 1.5rem;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition);
-    font-family: 'Open Sans', sans-serif;
-}
-
-.btn-uncomplete:hover {
-    background: var(--danger);
 }
 
 /* ===== MODULE NAV ===== */
