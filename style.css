@@ -247,8 +247,7 @@ li {
     margin-left: var(--sidebar-width);
     margin-top: var(--header-height);
     min-height: calc(100vh - var(--header-height));
-    padding: 2rem;
-    max-width: 900px;
+    padding: 2rem 3rem;
 }
 
 .module {
