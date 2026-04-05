@@ -8,66 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="auth-screen" id="authScreen">
-        <div class="auth-container">
-            <div class="auth-header">
-                <span class="auth-logo">✝</span>
-                <h1>Pastoral da Esperança</h1>
-                <p>Treinamento de Voluntários</p>
-            </div>
-
-            <!-- CSS-only toggle -->
-            <input type="checkbox" id="authToggle" class="auth-toggle-input">
-
-            <!-- Login Form -->
-            <form class="auth-form auth-login" id="loginForm" onsubmit="handleLogin(event)">
-                <h2>Entrar</h2>
-                <div class="form-group">
-                    <label for="loginEmail">E-mail</label>
-                    <input type="email" id="loginEmail" required placeholder="seu@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Senha</label>
-                    <input type="password" id="loginPassword" required placeholder="Sua senha" minlength="6">
-                </div>
-                <div class="auth-error" id="loginError" style="display:none"></div>
-                <button type="submit" class="btn-primary btn-full" id="loginBtn">Entrar</button>
-                <p class="auth-switch">Ainda não tem conta? <label for="authToggle" class="auth-link">Cadastre-se</label></p>
-            </form>
-
-            <!-- Register Form -->
-            <form class="auth-form auth-register" id="registerForm" onsubmit="handleRegister(event)">
-                <h2>Cadastro</h2>
-                <div class="form-group">
-                    <label for="regName">Nome Completo</label>
-                    <input type="text" id="regName" required placeholder="Seu nome completo">
-                </div>
-                <div class="form-group">
-                    <label for="regParish">Paróquia (opcional)</label>
-                    <input type="text" id="regParish" placeholder="Nome da sua paróquia">
-                </div>
-                <div class="form-group">
-                    <label for="regEmail">E-mail</label>
-                    <input type="email" id="regEmail" required placeholder="seu@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="regPassword">Senha</label>
-                    <input type="password" id="regPassword" required placeholder="Mínimo 6 caracteres" minlength="6">
-                </div>
-                <div class="auth-error" id="registerError" style="display:none"></div>
-                <div class="auth-success" id="registerSuccess" style="display:none"></div>
-                <button type="submit" class="btn-primary btn-full" id="regBtn">Criar Conta</button>
-                <p class="auth-switch">Já tem conta? <label for="authToggle" class="auth-link">Entrar</label></p>
-            </form>
-        </div>
-    </div>
-
     <!-- Header -->
-    <header class="main-header hidden" id="appHeader">
+    <header class="main-header" id="appHeader">
         <div class="header-content">
             <div class="logo">
                 <span class="logo-icon">✝</span>
@@ -76,16 +20,12 @@
                     <p class="subtitle">O Rosto Solidário da Igreja no Luto e na Dor</p>
                 </div>
             </div>
-            <div class="header-right">
-                <span class="user-name" id="userName"></span>
-                <button class="btn-logout" onclick="handleLogout()">Sair</button>
-                <button class="menu-toggle" aria-label="Menu">☰</button>
-            </div>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav class="sidebar hidden" id="sidebar">
+    <nav class="sidebar" id="sidebar">
         <div class="nav-header">
             <h3>Módulos de Formação</h3>
             <div class="progress-bar">
@@ -128,7 +68,7 @@
                 <span class="nav-icon"><i data-lucide="calendar-heart" class="lucide-icon"></i></span> Módulo 10: Dia de Finados
             </a></li>
             <li><a href="#quiz" class="nav-link" data-module="quiz">
-                <span class="nav-icon"><i data-lucide="file-check" class="lucide-icon"></i></span> Avaliação Final
+                <span class="nav-icon"><i data-lucide="file-check" class="lucide-icon"></i></span> Referência Rápida
             </a></li>
         </ul>
     </nav>
@@ -137,10 +77,10 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- Main Content -->
-    <main class="content hidden" id="mainContent">
+    <main class="content" id="mainContent">
 
         <!-- HOME -->
-        <section class="module hidden" id="home">
+        <section class="module" id="home">
             <div class="hero">
                 <div class="hero-text">
                     <h2>Bem-vindo(a) ao Treinamento da<br>Pastoral da Esperança</h2>
@@ -183,8 +123,8 @@
                 </div>
                 <div class="info-card">
                     <div class="card-icon"><i data-lucide="file-check" class="lucide-icon-lg"></i></div>
-                    <h3>Avaliação</h3>
-                    <p>Quiz final para verificar a compreensão de cada módulo estudado</p>
+                    <h3>Referência Rápida</h3>
+                    <p>Frases-chave do livro e leituras bíblicas para consulta em campo</p>
                 </div>
             </div>
 
@@ -284,6 +224,10 @@
                     <div class="learning-item">
                         <span class="check"><i data-lucide="check" class="lucide-icon-sm"></i></span>
                         <span>Compreender o luto e seus significados</span>
+                    </div>
+                    <div class="learning-item">
+                        <span class="check"><i data-lucide="check" class="lucide-icon-sm"></i></span>
+                        <span>Consultar leituras bíblicas recomendadas para cada situação</span>
                     </div>
                 </div>
             </div>
@@ -2498,29 +2442,201 @@
         </section>
 
         <!-- QUIZ -->
+        <!-- REFERÊNCIA RÁPIDA -->
         <section class="module hidden" id="quiz">
             <div class="module-header">
-                <span class="module-badge">Avaliação Final</span>
-                <h2>Teste seus Conhecimentos</h2>
-                <p class="module-desc">Responda às questões abaixo para avaliar sua compreensão do treinamento</p>
+                <span class="module-badge">Referência Rápida</span>
+                <h2>Pontos Essenciais do Treinamento</h2>
+                <p class="module-desc">As frases-chave do livro que todo agente deve ter sempre em mente</p>
             </div>
 
-            <div class="quiz-container" id="quizContainer">
-                <!-- Quiz será gerado via JavaScript -->
+            <div class="section-block">
+                <h3>Frases que Definem a Pastoral</h3>
+                <div class="bible-verse">
+                    <p>"Animar é dar alento à alma. A palavra vem de anima, que significa alma. A missão da Pastoral da Esperança é tocar a alma das pessoas enlutadas e reerguê-las de suas prostrações para a vida."</p>
+                    <cite>— Cap. I: Identidade e Missão</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"A Pastoral da Esperança não deve limitar suas ações nas celebrações de corpo presente, ou nos ritos de exéquias. Ela deve acompanhar a família, dando assistência amiga e religiosa."</p>
+                    <cite>— Cap. II: Campo de Atuação</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"Não envie para a missão pessoas despreparadas, pois isso pode atrapalhar o trabalho e expor a pessoa e a própria comunidade."</p>
+                    <cite>— Cap. IV: Formação dos Agentes</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"O bom-senso é o norteador de comportamentos. Não se esqueça de usá-lo em todos os momentos, especialmente quando estiver agindo na Pastoral da Esperança."</p>
+                    <cite>— Cap. V: Procedimentos</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"Coordene com autoridade, sem ser autoritário, e tudo caminhará bem."</p>
+                    <cite>— Cap. VI: Coordenação</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"Lembre-se, cada momento é único, por isso, por mais que se tenha coordenado uma celebração, ela será sempre única para muitos dos que estão ali."</p>
+                    <cite>— Cap. VII: Celebração de Exéquias</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"A única coisa que podemos fazer pelos que já morreram é rezar por eles. Como a missa é a celebração do mistério pascal, nada mais adequado do que rezar uma missa em memória de quem faleceu."</p>
+                    <cite>— Cap. VIII: Missa de 7º Dia</cite>
+                </div>
+                <div class="bible-verse">
+                    <p>"Sem preparação nenhum trabalho dá os resultados esperados. A prática vai ensinando, mas a formação é o alicerce."</p>
+                    <cite>— Cap. IV: Formação</cite>
+                </div>
             </div>
 
-            <div class="quiz-results hidden" id="quizResults">
-                <div class="results-card">
-                    <h3>Resultado da Avaliação</h3>
-                    <div class="score-circle" id="scoreCircle">
-                        <span class="score-number" id="scoreNumber">0</span>
-                        <span class="score-label">de 15</span>
+            <div class="section-block">
+                <h3>O que Nunca Esquecer</h3>
+                <div class="avoid-list">
+                    <div class="avoid-item">
+                        <div class="avoid-icon"><i data-lucide="alert-triangle" class="lucide-icon"></i></div>
+                        <div>
+                            <h4>Deus não pune nem castiga com a morte</h4>
+                            <p>Ele não quer a morte, mas a vida (Ez 18,23). Se a pessoa morreu, cumpriu sua missão — e não porque Deus estava ausente.</p>
+                        </div>
                     </div>
-                    <p class="score-message" id="scoreMessage"></p>
-                    <div class="results-actions">
-                        <button class="btn-secondary" onclick="restartQuiz()">Refazer Avaliação</button>
-                        <button class="btn-primary" onclick="navigateTo('home')">Voltar ao Início</button>
+                    <div class="avoid-item">
+                        <div class="avoid-icon"><i data-lucide="alert-triangle" class="lucide-icon"></i></div>
+                        <div>
+                            <h4>A pastoral não depende do padre</h4>
+                            <p>A função é fazer o acompanhamento com ou sem a presença do pároco. Apenas mantenha-o informado das ações.</p>
+                        </div>
                     </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon"><i data-lucide="alert-triangle" class="lucide-icon"></i></div>
+                        <div>
+                            <h4>Consulte a família antes de celebrar</h4>
+                            <p>Verifique se a família deseja a presença da Igreja Católica. Respeite outras denominações presentes.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon"><i data-lucide="alert-triangle" class="lucide-icon"></i></div>
+                        <div>
+                            <h4>Trabalho voluntário e gratuito</h4>
+                            <p>Nunca aceite pagamento. Se oferecerem dinheiro, recuse e sugira doação à paróquia.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon"><i data-lucide="alert-triangle" class="lucide-icon"></i></div>
+                        <div>
+                            <h4>Sua presença é a mensagem</h4>
+                            <p>Você não precisa ter todas as respostas. Às vezes, um abraço silencioso diz mais que mil palavras.</p>
+                        </div>
+                    </div>
+                    <div class="avoid-item">
+                        <div class="avoid-icon"><i data-lucide="alert-triangle" class="lucide-icon"></i></div>
+                        <div>
+                            <h4>Não apresse o luto de ninguém</h4>
+                            <p>Cada pessoa tem seu tempo. A Pastoral existe para caminhar ao lado — não para dizer quando a dor deve acabar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>Leituras Bíblicas para Cada Situação</h3>
+                <p>Textos recomendados pelo livro para uso nas celebrações e acompanhamento:</p>
+
+                <h4>Para Celebrações de Exéquias (Velório)</h4>
+                <div class="bible-references">
+                    <div class="bible-ref">
+                        <strong>1Cor 15,12-20</strong>
+                        <span>A crença na ressurreição — "Se Cristo ressuscitou, também os que morreram em Cristo ressuscitarão"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Salmo 23 (22)</strong>
+                        <span>"O Senhor é meu pastor, nada me faltará" — Deus nos conduz pelo vale das sombras da morte</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Jo 11,17-27</strong>
+                        <span>Ressurreição de Lázaro — "Eu sou a ressurreição e a vida"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Jo 14,1-6</strong>
+                        <span>"Na casa de meu Pai há muitas moradas" — Jesus prepara um lugar para nós</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Is 61,1-3</strong>
+                        <span>"O Espírito do Senhor está sobre mim, porque me ungiu para consolar os aflitos"</span>
+                    </div>
+                </div>
+
+                <h4>Para Missa de 7º Dia</h4>
+                <div class="bible-references">
+                    <div class="bible-ref">
+                        <strong>Jó 19,1.23-27</strong>
+                        <span>"Eu sei que meu Redentor vive" — Esperança na ressurreição</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Salmo 27 (26)</strong>
+                        <span>"O Senhor é minha luz e minha salvação, a quem temerei?"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Rm 5,5-11</strong>
+                        <span>"A esperança não decepciona, porque o amor de Deus foi derramado em nossos corações"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Jo 6,37-40</strong>
+                        <span>"Todo aquele que o Pai me dá virá a mim, e eu o ressuscitarei no último dia"</span>
+                    </div>
+                </div>
+
+                <h4>Para Novena com a Família</h4>
+                <div class="bible-references">
+                    <div class="bible-ref">
+                        <strong>Rm 8,35-39</strong>
+                        <span>"Nada nos separará do amor de Deus" — Nem a morte, nem a vida</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>1Ts 4,13-18</strong>
+                        <span>"Não queremos que ignoreis a respeito dos que dormem" — Consolo sobre os mortos</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Ap 21,1-4</strong>
+                        <span>"Deus enxugará toda lágrima dos seus olhos" — A nova Jerusalém</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>2Cor 4,16-18</strong>
+                        <span>"O que se vê é transitório, mas o que não se vê é eterno"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Fl 1,21-24</strong>
+                        <span>"Para mim, viver é Cristo e morrer é lucro"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>1Cor 15,51-57</strong>
+                        <span>"A morte foi absorvida pela vitória" — A vitória sobre a morte</span>
+                    </div>
+                </div>
+
+                <h4>Para Visitas e Acompanhamento</h4>
+                <div class="bible-references">
+                    <div class="bible-ref">
+                        <strong>Lc 7,11-17</strong>
+                        <span>A viúva de Naim — Jesus se compadece e ressuscita o filho único</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Mt 5,4</strong>
+                        <span>"Bem-aventurados os que choram, porque serão consolados"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>1Pd 3,15</strong>
+                        <span>"Estai sempre prontos a dar razão da vossa esperança a todo aquele que vo-la pedir"</span>
+                    </div>
+                    <div class="bible-ref">
+                        <strong>Gn 1,26-31; 2,1-3</strong>
+                        <span>A conclusão da criação — Deus criou em 6 dias e no 7º descansou (simbolismo da missa de 7º dia)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block highlight-block">
+                <h3>Oração do Agente da Pastoral da Esperança</h3>
+                <div class="golden-rule">
+                    <p>"Que este subsídio ajude as paróquias na implantação desta pastoral, acompanhando os agentes no seu processo formativo, de modo que cada agente da Pastoral da Esperança reavive em si a esperança que será transmitida aos que estão carecendo dela."</p>
+                    <p style="margin-top: 1rem;"><em>Que Nossa Senhora das Dores ajude as famílias enlutadas a suportar a dor e a reencontrar o sentido da vida e a alegria de viver, apesar dos pesares.</em></p>
+                    <cite style="display:block; text-align:right; margin-top:0.5rem; font-size:0.85rem; color:var(--text-muted);">— José Carlos Pereira, Considerações Finais</cite>
                 </div>
             </div>
 
@@ -2532,7 +2648,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="main-footer hidden" id="appFooter">
+    <footer class="main-footer" id="appFooter">
         <p>Pastoral da Esperança — Material de formação baseado no livro de José Carlos Pereira (Editora Vozes, 2015)</p>
         <p>Desenvolvido para a formação de voluntários</p>
     </footer>
